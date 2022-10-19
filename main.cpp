@@ -2,6 +2,14 @@
 #include <string>
 #include "usuario/usuario.h"
 
+void adicionarFundos(std::string nome, std::string email, std::string senha){
+  int saldo;
+  std::cout << "Quanto voce deseja adicionar a sua carteira?" << std::endl;
+  std::cin >> saldo;
+
+  Usuario user(nome, email, senha, saldo);
+};
+
 void criarConta(){
   std::string nome;
   std::string email;
@@ -9,27 +17,36 @@ void criarConta(){
   int opcao;
 
   std::cout << "Digite o seu nome: " << std::endl;
-  std::cin >> nome;
+
+  std::cin.ignore();
+  std::getline(std::cin, nome);
+
 
   while (nome.length() > 20)
   {
     std::cout << "No maximo 20 caracteres, tente novamente: " << std::endl;
-    std::cin >> nome;
+    std::getline(std::cin, nome);
   }
 
   std::cout << "Digite o seu email: " << std::endl;
-  std::cin >> email;
+  std::getline(std::cin, email);
 
   std::cout << "Digite a sua senha: " << std::endl;
-  std::cin >> senha;
+  std::getline(std::cin, senha);
 
   while (senha.length() > 20 || senha.length() < 6)
   {
     std::cout << "No minimo 6 e no maximo 20 caracteres, tente novamente: " << std::endl;
-    std::cin >> senha;
+    std::getline(std::cin, senha);
   }
 
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao" << std::endl;
+  std::cin >> opcao;
+
+  while (opcao != 0 && opcao != 1) {
+    std::cout << "Opcao invalida, tente novamente:" << std::endl;
+    std::cin >> opcao;
+  }
 
   if (opcao == 0) {
     adicionarFundos(nome, email, senha);
@@ -44,14 +61,6 @@ void criarConta(){
 
 void entrar() {
 
-};
-
-void adicionarFundos(std::string nome, std::string email, std::string senha){
-  int saldo;
-  std::cout << "Quanto voce deseja adicionar a sua carteira?" << std::endl;
-  std::cin >> saldo;
-
-  Usuario user(nome, email, senha, saldo);
 };
 
 int main(void) {
