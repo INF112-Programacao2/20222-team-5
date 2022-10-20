@@ -3,10 +3,8 @@
 class Jogo
 {
 private:
-  std::string nome;
-  int apostaMinima;
+  static int apostaMinima;
 
 public:
-  Jogo(std::string nome, int apostaMinima);
-  ~Jogo();
+  static int getApostaMinima();
 };

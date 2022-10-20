@@ -1,8 +1,7 @@
 #include "jogo.h"
 #include <string>
 
-Jogo::Jogo(std::string nome, int apostaMinima)
+int Jogo::getApostaMinima()
 {
-  this->nome = nome;
-  this->apostaMinima = apostaMinima;
+  return apostaMinima;
 }
