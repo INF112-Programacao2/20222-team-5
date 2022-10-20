@@ -1,6 +1,7 @@
 #include <string>
 
-class Usuario {
+class Usuario
+{
 private:
     std::string nome;
     std::string email;
@@ -24,5 +25,3 @@ public:
     void setSenha();
     void setSaldo();
 };
-
-

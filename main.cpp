@@ -1,8 +1,54 @@
 #include <iostream>
 #include <string>
+#include "jogo/roleta/roleta.h"
 #include "usuario/usuario.h"
 
-void adicionarFundos(std::string nome, std::string email, std::string senha){
+int getOpcao(int);
+void adicionarFundos(std::string nome, std::string email, std::string senha);
+void criarConta();
+void entrar();
+
+int main(void)
+{
+  std::cout << "Seja bem vindo ao cassino ..." << std::endl;
+  std::cout << "(0) - Criar conta" << std::endl;
+  std::cout << "(1) - Entrar" << std::endl;
+
+  switch (getOpcao(1))
+  {
+  case 0:
+    criarConta();
+    break;
+  case 1:
+    entrar();
+    break;
+  }
+  std::cout << "Qual jogo gostaria de jogar?" << std::endl;
+  std::cout << "(0) - Blackjack" << std::endl;
+  std::cout << "(1) - Roleta" << std::endl;
+  std::cout << "(2) - Jackpot" << std::endl;
+  getOpcao(2);
+}
+
+int getOpcao(int maximo)
+{
+  int opcao;
+  while (true)
+  {
+    std::cin >> opcao;
+    if (opcao >= 0 || opcao <= maximo)
+    {
+      return opcao;
+    }
+    else
+    {
+      std::cout << "Opção invalida, por favor digite um número entre 0 e " << maximo << std::endl;
+    }
+  }
+}
+
+void adicionarFundos(std::string nome, std::string email, std::string senha)
+{
   int saldo;
   std::cout << "Quanto voce deseja adicionar a sua carteira?" << std::endl;
   std::cin >> saldo;
@@ -10,7 +56,8 @@ void adicionarFundos(std::string nome, std::string email, std::string senha){
   Usuario user(nome, email, senha, saldo);
 };
 
-void criarConta(){
+void criarConta()
+{
   std::string nome;
   std::string email;
   std::string senha;
@@ -20,7 +67,6 @@ void criarConta(){
 
   std::cin.ignore();
   std::getline(std::cin, nome);
-
 
   while (nome.length() > 20)
   {
@@ -43,54 +89,24 @@ void criarConta(){
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao" << std::endl;
   std::cin >> opcao;
 
-  while (opcao != 0 && opcao != 1) {
+  while (opcao != 0 && opcao != 1)
+  {
     std::cout << "Opcao invalida, tente novamente:" << std::endl;
     std::cin >> opcao;
   }
 
-  if (opcao == 0) {
+  if (opcao == 0)
+  {
     adicionarFundos(nome, email, senha);
   }
-  else {
+  else
+  {
     Usuario user(nome, email, senha);
   }
-  
-  std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
 
+  std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
 }
 
-void entrar() {
+void entrar(){
 
 };
-
-int main(void) {
-  
-  std::cout << "Seja bem vindo ao cassino ..." << std::endl;
-  std::cout << "(0) - Criar conta" << std::endl;
-  std::cout << "(1) - Entrar" << std::endl;
-  
-  int opcao;
-
-  while (true)
-  {
-    std::cin >> opcao;
-    if(opcao == 0 || opcao == 1) {
-      break;
-    }
-    else {
-      std::cout << "Opcao invalida, tente novamente:" << std::endl;
-    }
-  }
-
-  switch (opcao) {
-  case 0:
-    criarConta();
-    break;
-  case 1:
-    entrar();
-    break;
-  }
-}
-
-
-
