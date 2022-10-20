@@ -20,8 +20,8 @@ public:
     int getSaldo();
     int getFichas();
 
-    void setNome();
-    void setEmail();
+    void setNome(std::string nome);
+    void setEmail(std::string email);
     void setSenha();
     void setSaldo();
 };

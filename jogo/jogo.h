@@ -7,4 +7,7 @@ private:
 
 public:
   static int getApostaMinima();
+  Jogo(std::string nome, int apostaMinima);
+  Jogo();
+  ~Jogo();
 };

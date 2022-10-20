@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <string>
 #include "usuario.h"
 
 Usuario::Usuario(std::string nome, std::string email, std::string senha)
@@ -21,4 +22,12 @@ Usuario::Usuario(std::string nome, std::string email, std::string senha, int sal
 
 Usuario::~Usuario()
 {
+}
+
+void Usuario::setNome(std::string nome) {
+    this->nome = nome;
+}
+
+void Usuario::setEmail(std::string email) {
+    this->email = email;
 }
