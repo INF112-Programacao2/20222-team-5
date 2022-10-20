@@ -8,5 +8,6 @@ private:
 
 public:
   Jogo(std::string nome, int apostaMinima);
+  Jogo();
   ~Jogo();
 };
