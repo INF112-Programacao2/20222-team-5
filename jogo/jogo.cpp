@@ -1,4 +1,5 @@
 #include "jogo.h"
+#include <iostream>
 #include <string>
 
 int Jogo::getApostaMinima()
@@ -21,8 +22,8 @@ int Jogo::getPremiacao(){
     return _premiacao;
 }
 
-void Jogo::setValorApostado(double valor){
-    _valorApostado = valor;
+void Jogo::setValorApostado(int valor){
+    this->_valorApostado = valor; 
 }
 
 void Jogo::setPremiacao(double valor){

@@ -23,6 +23,6 @@ public:
   int getValorApostado();
   int getPremiacao();
 
-  void setValorApostado(double valor);
+  void setValorApostado(int valor);
   void setPremiacao(double valor);
 };

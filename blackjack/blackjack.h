@@ -6,12 +6,14 @@ class Blackjack : public Jogo{
     private:
     MaoBlackjack _player;
     MaoBlackjack _dealer;
+    int _v[54];
     
     public:
     Blackjack(std::string nome, int apostaMinima);
 
     int sorteiaCarta();
 
-    void setValorApostado(int valor);
-    void somaValor(int valor);
+    void somaValor(int valor, MaoBlackjack user);
+    void main();
+    void setPremiacao(double valor);
 };
