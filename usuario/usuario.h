@@ -23,5 +23,5 @@ public:
     void setNome(std::string nome);
     void setEmail(std::string email);
     void setSenha();
-    void setSaldo();
+    void setSaldo(double valor);
 };
