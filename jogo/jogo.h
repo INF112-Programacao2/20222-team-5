@@ -13,19 +13,15 @@ private:
   int valorApostado;
   int premiacao;
 
-
 public:
-  
-  Jogo(std::string nome, int apostaMinima);
+
   Jogo();
   ~Jogo();
-
   static int getApostaMinima();
   static std::string getNome();
   Usuario getUsuario();
   int getValorApostado();
   int getPremiacao();
-
   void setValorApostado(double valor);
   void setPremiacao(double valor);
 };

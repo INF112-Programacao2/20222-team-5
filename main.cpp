@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "jogo/roleta/roleta.h"
 #include "usuario/usuario.h"
+#include "jogo/roleta/roleta.h"
 
 int getOpcao(int);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
@@ -17,18 +17,41 @@ int main(void)
   switch (getOpcao(1))
   {
   case 0:
+  {
     criarConta();
     break;
+  }
   case 1:
+  {
     entrar();
     break;
+  }
   }
   std::cout << "Qual jogo gostaria de jogar?" << std::endl;
   std::cout << "(0) - Blackjack" << std::endl;
   std::cout << "(1) - Roleta" << std::endl;
   std::cout << "(2) - Jackpot" << std::endl;
-  getOpcao(2);
+  switch (getOpcao(1))
+  {
+  case 0:
+  {
+    break;
+  }
+  case 1:
+  {
+    // Roleta roleta = criarJogoRoleta();
+  }
+  case 3:
+  {
+    break;
+  }
+  }
 }
+
+// Roleta criarJogoRoleta()
+// {
+//   Roleta roleta()
+// }
 
 int getOpcao(int maximo)
 {

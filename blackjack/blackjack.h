@@ -1,4 +1,5 @@
 #ifndef BLACKJACK
+#define BLACKJACK
 
 #include <iostream>
 #include "jogo.h"
