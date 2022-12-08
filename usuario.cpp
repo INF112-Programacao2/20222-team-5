@@ -20,9 +20,9 @@ Usuario::Usuario(std::string nome, std::string email, std::string senha, int sal
     this->fichas = 0;
 }
 
-Usuario::~Usuario()
-{
-}
+Usuario::Usuario () {}
+
+Usuario::~Usuario() {}
 
 void Usuario::setNome(std::string nome) {
     this->nome = nome;
