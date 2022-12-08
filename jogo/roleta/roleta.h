@@ -1,3 +1,5 @@
+#ifndef ROLETA
+
 #include "../jogo.h"
 #include "../../usuario/usuario.h"
 #include <string>
@@ -14,3 +16,5 @@ private:
 public:
   Roleta(Usuario user, std::string corAposta, int valorApostado);
 };
+
+#endif

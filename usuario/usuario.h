@@ -1,3 +1,6 @@
+#ifndef USUARIO
+#define USUARIO
+
 #include <string>
 
 class Usuario
@@ -25,3 +28,5 @@ public:
     void setSenha();
     void setSaldo();
 };
+
+#endif

@@ -1,6 +1,8 @@
+#ifndef JACKPOT
+
 #include <iostream>
 #include "../jogo/jogo.h"
-#include "../../usuario/usuario.h"
+#include "../usuario/usuario.h"
 
 class Jackpot:public Jogo{
     private:
@@ -15,3 +17,5 @@ class Jackpot:public Jogo{
     void setPosicoes();
     void setPremiacoes();
 };
+
+#endif

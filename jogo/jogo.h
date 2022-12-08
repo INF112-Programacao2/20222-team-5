@@ -1,14 +1,17 @@
+#ifndef JOGO
+#define JOGO
+
 #include <string>
-#include "usuario.h"
+#include "../usuario/usuario.h"
 
 class Jogo
 {
 private:
-  static int _apostaMinima;
-  static std::string _nome;
-  Usuario _user();
-  int _valorApostado;
-  int _premiacao;
+  static int apostaMinima;
+  static std::string nome;
+  Usuario user;
+  int valorApostado;
+  int premiacao;
 
 
 public:
@@ -26,3 +29,5 @@ public:
   void setValorApostado(double valor);
   void setPremiacao(double valor);
 };
+
+#endif

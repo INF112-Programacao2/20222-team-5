@@ -4,6 +4,8 @@
 
 int Jogo::apostaMinima = 50;
 
+std::string Jogo::nome = "Roleta";
+
 Roleta::Roleta(Usuario user, std::string corAposta, int valorApostado)
 {
   this->user = user;

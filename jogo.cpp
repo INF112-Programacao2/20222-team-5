@@ -10,9 +10,9 @@ int Jogo::getApostaMinima()
     return apostaMinima;
 }
 
-std::string Jogo::getNome(){
-    return nome;
-}
+Jogo::Jogo() {}
+
+Jogo::~Jogo() {}
 
 Usuario Jogo::getUsuario(){ 
     return user;
