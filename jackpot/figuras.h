@@ -6,9 +6,10 @@
 
 class Figuras{
     private:
-    std::vector<std::string>_figuras;
+    std::vector<int>_figuras;
     public:
-    std::string get_figuras();
+    int get_figuras(int sort);
+    void sorteiaFiguras();
 };
 
 #endif
