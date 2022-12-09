@@ -6,7 +6,7 @@ class Jogo
 private:
   static int _apostaMinima;
   static std::string _nome;
-  Usuario _user();
+  Usuario _user;
   int _valorApostado;
   int _premiacao;
 

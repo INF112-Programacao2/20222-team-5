@@ -5,7 +5,7 @@ class MaoBlackjack{
     private:
     int _valorMao;
     int _nCartas;
-    int _cartas[10];
+    int _cartas[10] = {0,0,0,0,0,0,0,0,0,0};
     public:
     MaoBlackjack();
 
@@ -16,6 +16,8 @@ class MaoBlackjack{
     int getCartas(int i);
 
     void setValorMao(int valor);
+
+    void imprimeMao();
 };
 
 #endif

@@ -5,17 +5,19 @@
 Blackjack::Blackjack(std::string nome, int apostaMinima) : Jogo(nome,apostaMinima){
     _player = MaoBlackjack();
     _dealer = MaoBlackjack();
-    _v[54] = {0};
 };
 
-int Blackjack::sorteiaCarta(){
+int Blackjack::sorteiaCarta(MaoBlackjack user){
     int valor;
     x:
-    valor = std::rand() % 54;
-    if(_v[valor] == 0){
+    valor = std::rand() % 52;
+    if(_baralho.getCarta(valor) == 0){
         goto x;
     }
-    _v[valor] = 0;
+    _baralho.tiraCarta(valor);
+
+    user.setCartas(valor);
+
     return valor;
 };
 
@@ -36,6 +38,12 @@ void main(Usuario user){
 
         user.setSaldo(user.getSaldo()-aposta);
         
-//        setPremiacao(2*aposta);
+        Blackjack blackjack("Blackjack", Jogo::getApostaMinima());
+
+        while(true){
+            std::cout << "O jogo comecou!\n";
+
+
+        }
     }
 }

@@ -20,3 +20,8 @@ int MaoBlackjack::getValorMao(){
 void MaoBlackjack::setValorMao(int valor){
     this->_valorMao = valor; 
 }
+
+void MaoBlackjack::imprimeMao(){
+    
+}
+
