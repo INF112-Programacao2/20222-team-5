@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../jogo/jogo.h"
 #include "../usuario/usuario.h"
+#include "figuras.h"
 
 class Jackpot:public Jogo{
     private:
@@ -10,6 +11,7 @@ class Jackpot:public Jogo{
     int *posicoes;
     int *premiacoes;
     int apostaMinima;
+    Figuras _figuras;
     public:
     Jackpot(Usuario usuario,int posicoes, int premiacoes);
     // int getPosicoes();
