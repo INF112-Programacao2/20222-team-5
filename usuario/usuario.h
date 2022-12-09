@@ -1,6 +1,10 @@
+#ifndef USUARIO
+#define USUARIO
+
 #include <string>
 
-class Usuario {
+class Usuario
+{
 private:
     std::string nome;
     std::string email;
@@ -11,6 +15,7 @@ private:
 public:
     Usuario(std::string nome, std::string email, std::string senha);
     Usuario(std::string nome, std::string email, std::string senha, int saldo);
+    Usuario();
     ~Usuario();
 
     std::string getNome();
@@ -18,10 +23,10 @@ public:
     int getSaldo();
     int getFichas();
 
-    void setNome();
-    void setEmail();
+    void setNome(std::string nome);
+    void setEmail(std::string email);
     void setSenha();
     void setSaldo();
 };
 
-
+#endif

@@ -1,8 +1,35 @@
 #include "jogo.h"
 #include <string>
 
-Jogo::Jogo(std::string nome, int apostaMinima)
+Jogo::Jogo() {}
+
+Jogo::~Jogo() {}
+
+int Jogo::getApostaMinima()
 {
-  this->nome = nome;
-  this->apostaMinima = apostaMinima;
+    return apostaMinima;
+}
+
+std::string Jogo::getNome(){
+    return nome;
+}
+
+Usuario Jogo::getUsuario(){ 
+    return user;
+}
+
+int Jogo::getValorApostado(){
+    return valorApostado;
+}
+
+int Jogo::getPremiacao(){
+    return premiacao;
+}
+
+void Jogo::setValorApostado(double valor){
+    valorApostado = valor;
+}
+
+void Jogo::setPremiacao(double valor){
+    premiacao = valor;
 }
