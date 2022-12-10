@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include "usuario/usuario.h"
 #include "jogo/roleta/roleta.h"
 
@@ -10,7 +11,16 @@ void entrar();
 
 int main(void)
 {
-  std::cout << "Seja bem vindo ao cassino ..." << std::endl;
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================\n";
+  std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
   std::cout << "(1) - Entrar" << std::endl;
 
@@ -73,6 +83,16 @@ int getOpcao(int maximo)
 void adicionarFundos(std::string nome, std::string email, std::string senha)
 {
   int saldo;
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Quanto voce deseja adicionar a sua carteira?" << std::endl;
   std::cin >> saldo;
 
@@ -85,7 +105,16 @@ void criarConta()
   std::string email;
   std::string senha;
   int opcao;
-
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Digite o seu nome: " << std::endl;
 
   std::cin.ignore();
@@ -96,10 +125,30 @@ void criarConta()
     std::cout << "No maximo 20 caracteres, tente novamente: " << std::endl;
     std::getline(std::cin, nome);
   }
-
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Digite o seu email: " << std::endl;
   std::getline(std::cin, email);
 
+  fflush(stdin);
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Digite a sua senha: " << std::endl;
   std::getline(std::cin, senha);
 
@@ -109,6 +158,16 @@ void criarConta()
     std::getline(std::cin, senha);
   }
 
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao" << std::endl;
   std::cin >> opcao;
 
@@ -127,9 +186,19 @@ void criarConta()
     Usuario user(nome, email, senha);
   }
 
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|     CCCCC      A        SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n|   CC          A  A      SS          SS             III     NN N   NN   OO      OO  |";
+  std::cout << "\n|  CC          A    A     SSSSSSSSS   SSSSSSSSS      III     NN  N  NN   OO      OO  |";
+  std::cout << "\n|   CC        AAAAAAAA           SS          SS      III     NN   N NN   OO      OO  |";
+  std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
   std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
 }
 
-void entrar(){
+void entrar() {
 
 };
