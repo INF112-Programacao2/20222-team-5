@@ -11,7 +11,7 @@ Jackpot::Jackpot(Usuario usuario,int posicoes,int premiacoes, Figuras figuras,  
     apostaminima=10;
 };
 
-int Jackpot::rodarJack(Usuario usuario){
+void Jackpot::rodarJack(Usuario usuario){
     int escolha;
     int aposta;
     std::cout << "Bem-vindo(a) ao Jackpot!! "<<std::endl;
@@ -19,7 +19,7 @@ int Jackpot::rodarJack(Usuario usuario){
     std::cin >> escolha;
     switch(escolha){
         case 0:
-        return 0;
+        break;
         case 1:
         std::cout << "Escolha o valor que deseja depositar: "<< std::endl;
         std::cout << "Voce tem: "<< usuario.getSaldo() << std::endl;
