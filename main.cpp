@@ -155,7 +155,7 @@ void adicionarFundos(std::string nome, std::string email, std::string senha)
 {
   int saldo;
   exibirCassino();
-  std::cout << "Quanto voce deseja adicionar a sua carteira?: ";
+  std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
 
   Usuario user(nome, email, senha, saldo);
@@ -197,13 +197,7 @@ void criarConta()
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
   std::cin >> opcao;
 
-  while (opcao != 0 && opcao != 1)
-  {
-    std::cout << "Opcao invalida, tente novamente:";
-    std::cin >> opcao;
-  }
-
-  if (opcao == 0)
+  if (getOpcao(1) == 0)
   {
     adicionarFundos(nome, email, senha);
   }
