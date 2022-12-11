@@ -15,7 +15,7 @@ private:
     Figuras _figuras;  // classe figuras
 public:
     Jackpot(Usuario usuario, int aposta); // funcoes utilizadas
-    void rodarJack(Usuario &usuario);     // funcao principal, a que roda o jackpot, botei ela para a main nao ficar cheia
+    int rodarJack(Usuario &usuario);     // funcao principal, a que roda o jackpot, botei ela para a main nao ficar cheia
     int get_pos0();                       // get de cada posicao
     int get_pos1();
     int get_pos2();

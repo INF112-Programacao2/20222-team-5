@@ -23,8 +23,10 @@ void depositar(Usuario &u);
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  Usuario adm("Admnistrador","adm@adm.com","adm123",200);
   Usuario a("Antonio","antonio@gmail.com","102030",200);
   listaUsuarios.push_back(a);
+  listaUsuarios.push_back(adm);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
@@ -53,7 +55,10 @@ int main(void)
       }
       case 1:
       {
-        entrar(listaUsuarios);
+        while (!entrar(listaUsuarios))
+        {
+          entrar(listaUsuarios);
+        }
         break;
       }
     }
@@ -225,7 +230,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
     }
     
   }
-
+  exibirCassino();
   std::cout << "Digite o seu email: ";
 
   while (true) {
@@ -260,7 +265,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
       std::cerr << e.what() << '\n';
     }
   }
-
+  exibirCassino();
   std::cout << "Digite a sua senha: ";
   
   while (true) {
@@ -310,11 +315,13 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
     if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
     {
       logado = true;
+      std::cout << "Login feito com sucesso!" << std::endl;
+      sleep(2);
       return logado;
     }
   }
 
-  std::cout << "Usuario ou senha incorretos!";
+  std::cout << "Usuario ou senha incorretos!" << std::endl;
   sleep(2);
   return logado;
 };
