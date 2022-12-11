@@ -188,11 +188,6 @@ bool verificaAposta(Usuario u, int valor){
   return true;
 }
 
-/*int getOpcao(int maximo)
-{
-  Roleta roleta();
-}*/
-
 int getOpcao(int maximo) {
   int opcao;
   while (true) {
