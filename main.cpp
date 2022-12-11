@@ -9,6 +9,7 @@
 #include "usuario/limMaxDeCaracteres.h"
 #include "usuario/senhaInvalida.h"
 #include "blackjack/blackjack.h"
+#include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
@@ -123,10 +124,12 @@ int main(void)
         }
       }
     }
+    break;
     case 2:
-    {
+    Usuario a("Antonio","antonio@gmail.com","102030",200);
+    Jackpot j(a,100);
+    j.rodarJack(a);
       break;
-    }
   }
 }
 
@@ -277,14 +280,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
 
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
-  std::cin >> opcao;
 
   if (getOpcao(1) == 0)
   {
     adicionarFundos(nome, email, senha);
-  }
-  else
-  {
+  } else {
     Usuario user(nome, email, senha);
     listaUsuarios.push_back(user);
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
