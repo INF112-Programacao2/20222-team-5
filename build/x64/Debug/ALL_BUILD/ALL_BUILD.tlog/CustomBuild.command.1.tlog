@@ -1,0 +1,10 @@
+^C:\USERS\GUSTA\DOCUMENTS\GITHUB\TRABALHO_PROG\20222-TEAM-5\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/gusta/Documents/GitHub/Trabalho_prog/20222-team-5 -BC:/Users/gusta/Documents/GitHub/Trabalho_prog/20222-team-5/build --check-stamp-file C:/Users/gusta/Documents/GitHub/Trabalho_prog/20222-team-5/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
