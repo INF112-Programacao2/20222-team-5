@@ -21,7 +21,6 @@ class Jackpot:public Jogo{
     void set_pos(int pos1, int pos2, int pos3);
     void set_valorAposta(int aposta);
     int  get_valorAposta();
-    void verAposta();
     int get_premiacao();
     void set_premiacao(int premiacao);
     int repetirJogada(Usuario &usuario);
