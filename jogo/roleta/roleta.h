@@ -7,7 +7,7 @@
 class Roleta : public Jogo
 {
 private:
-  Usuario user;
+  Usuario user();
   std::string corAposta;
   std::string resultado;
   int valorApostado;
