@@ -13,6 +13,7 @@ Blackjack::Blackjack(){
 
 int Blackjack::sorteiaCarta(MaoBlackjack &jogador){
     int valor;
+    int aux=0;
     
     sleep(1);
     unsigned seed = time(0);
@@ -22,9 +23,17 @@ int Blackjack::sorteiaCarta(MaoBlackjack &jogador){
     if(_baralho.getCarta(valor) == 0){
         goto x;
     }
-    _baralho.tiraCarta(valor);
+    if(valor >52){
+        goto x;
+    }
+    if(valor<0){
+        goto x;
+    }
+    
+    aux = valor;
     valor = _baralho.getCarta(valor);
-    if((jogador.getValorMao()+valor) <21 && valor == 11){
+    _baralho.tiraCarta(aux);
+    if((jogador.getValorMao()+valor) > 21 && valor == 11){
         valor = 1;
     }   
     jogador.compraCarta(valor);
@@ -53,6 +62,7 @@ void Blackjack::mainBlackjack(Usuario &user){
     user.setSaldo(user.getSaldo()-aposta);
 
     std::cout << "\nO jogo comecou!\n";
+    std::cout << "Lembre-se que o dealer para com 17!\n";
 
     std::cout << "O dealer tirou as cartas: " << game.sorteiaCarta(game._dealer) << " " <<game.sorteiaCarta(game._dealer) << std::endl;
     std::cout << "Voce tirou as cartas: "<< game.sorteiaCarta(game._player) << " " <<game.sorteiaCarta(game._player) << std::endl;
@@ -68,6 +78,11 @@ void Blackjack::mainBlackjack(Usuario &user){
             venceu = true;
             break;
         }
+        if(game._dealer.getValorMao()==21){
+            std::cout << "Blackjack do dealer! " << std::endl;
+            venceu = false;
+            break;
+        }
 
         std::cout << "O dealer tem: " << game._dealer.getValorMao() << " pontos\n";
         std::cout << "Voce tem: " << game._player.getValorMao() << " pontos\n";
@@ -81,7 +96,7 @@ void Blackjack::mainBlackjack(Usuario &user){
             case 1:
             y:
             if(game._dealer.getValorMao()<17){
-                std::cout << "O dealer tirou: " <<game.sorteiaCarta(game._dealer) <<std::endl;
+                std::cout << "O dealer tirou: " << game.sorteiaCarta(game._dealer) <<std::endl;
                 goto y;
             }
             if(game._dealer.getValorMao()>21){
@@ -97,7 +112,7 @@ void Blackjack::mainBlackjack(Usuario &user){
             break;
             case 3: 
             std::cout << "as cartas do dealer sao: "; 
-            game._player.imprimeMao();
+            game._dealer.imprimeMao();
             goto z;
             break;
         }
@@ -107,14 +122,14 @@ void Blackjack::mainBlackjack(Usuario &user){
     }
     if(game._player.getValorMao()<21 && game._dealer.getValorMao() < 21){
         if(game._player.getValorMao()<game._dealer.getValorMao()){
-            venceu = true;
+            venceu = false;
         }
         else if(game._player.getValorMao()==game._dealer.getValorMao()){
             std::cout << "Empate!" << std::endl;
             empate = true;
         }
         else{
-            venceu = false;
+            venceu = true;
         }
     }
     if(venceu){
@@ -122,8 +137,12 @@ void Blackjack::mainBlackjack(Usuario &user){
         user.setSaldo(user.getSaldo()+(2*aposta));
         std::cout << "A premiacao foi de: " << (2*aposta) << std::endl;
     }
-    if(!venceu){
+    if(!venceu && !empate){
         std::cout << "O dealer venceu!" <<std::endl;
+    }
+    if(empate){
+        std::cout << "O seu dinheiro foi devolvido!" << std::endl;
+        user.setSaldo(user.getSaldo()+(aposta));
     }
 }
 
