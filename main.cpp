@@ -276,14 +276,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
 
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
-  std::cin >> opcao;
 
   if (getOpcao(1) == 0)
   {
     adicionarFundos(nome, email, senha);
-  }
-  else
-  {
+  } else {
     Usuario user(nome, email, senha);
     listaUsuarios.push_back(user);
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
