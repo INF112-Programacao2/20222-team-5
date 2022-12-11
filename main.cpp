@@ -18,9 +18,12 @@ void exibirCassino();
 bool verificaAposta(Usuario u, int valor);
 void depositar(Usuario &u);
 
+
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  Usuario a("Antonio","antonio@gmail.com","102030",200);
+  listaUsuarios.push_back(a);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
@@ -125,7 +128,6 @@ int main(void)
     }
     break;
     case 2:
-    Usuario a("Antonio","antonio@gmail.com","102030",200);
     Jackpot j(a,100);
     j.rodarJack(a);
       break;
@@ -297,6 +299,7 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
   std::string senha;
 
   std::cout << "Digite o seu email: ";
+  std::cin.ignore();
   std::getline(std::cin, email);
 
   std::cout << "Digite a sua senha: ";
