@@ -22,8 +22,10 @@ void depositar(Usuario &u);
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  Usuario adm("Admnistrador","adm@adm.com","adm123",200);
   Usuario a("Antonio","antonio@gmail.com","102030",200);
   listaUsuarios.push_back(a);
+  listaUsuarios.push_back(adm);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
@@ -312,6 +314,8 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
     if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
     {
       logado = true;
+      std::cout << "Login feito com sucesso!" << std::endl;
+      sleep(2);
       return logado;
     }
   }
