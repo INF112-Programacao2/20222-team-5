@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <stdexcept>
 
 Jackpot::Jackpot(Usuario usuario, int aposta)
 {
@@ -39,7 +40,7 @@ int Jackpot::get_valorAposta()
 {
     return this->_aposta;
 }
-void Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
+int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
 {
     Figuras *figuras = new Figuras(); // deletado no final do programa, herda figuras
     int escolha;                      // implementada para depositar ou sair do programa
@@ -48,16 +49,24 @@ void Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
     int pos[3];                       // 3 posicoes do jackpot
     std::cout << "Bem-vindo(a) ao Jackpot!! " << std::endl;
     std::cout << "Voce desejar:\n [0]- Sair\n [1]- Depositar para jogar\n";
+    try{
     std::cin >> escolha;
+    if(isalpha(escolha)){
+        throw std::invalid_argument("Apenas 0 e 1, nao numeros");
+    }
+    }catch(std::invalid_argument &e){
+        std::cerr << e.what();
+    }
+    
     switch (escolha)
     {
     case 0:
-        break;
+        return 0;
     case 1:
         if (usuario.getSaldo() < _apostaminima) // caso o usuario tenha menos que a aposta minima, insere valor da aposta, herda usuario
         {
             int adc;
-            std::cout << "Saldo menor que aposta minima :(\n Insira o valor do deposito\n";
+            std::cout << "Saldo menor que aposta minima :(\n";
             adicionarFundos(usuario); // Funcao craida para adicionar saldo na conta,herda usuario
         }
         std::cout << "Seu novo saldo: " << usuario.getSaldo() << std::endl;
@@ -171,14 +180,13 @@ void Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
             break;
         }
         std::cout << std::endl;
-        std::cout << "Parabens !!\n";
-        repetirJogada(usuario); // Funcao criada caso o usuario deseje jogar novamente
+        std::cout << "Parabens !!\n"; 
     }
     else
     {
         std::cout << "Voce perdeu :(\n";
-        repetirJogada(usuario);
     }
+    return repetirJogada(usuario);
     delete figuras; // figuras deletadas
 }
 int Jackpot::repetirJogada(Usuario &usuario) // repete a jogada
