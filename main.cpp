@@ -10,19 +10,26 @@
 #include "usuario/limMaxDeCaracteres.h"
 #include "usuario/senhaInvalida.h"
 #include "usuario/emailInvalido.h"
+#include "blackjack/blackjack.h"
+#include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
 void criarConta(std::vector<Usuario> &listaUsuarios);
-void entrar();
+bool entrar(std::vector<Usuario> &listaUsuarios);
 void exibirCassino();
 void exibirRoleta();
 bool verificaAposta(Usuario u, int valor);
 void depositar(Usuario &u);
 
+
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  Usuario adm("Admnistrador","adm@adm.com","adm123",200);
+  Usuario a("Antonio","antonio@gmail.com","102030",200);
+  listaUsuarios.push_back(a);
+  listaUsuarios.push_back(adm);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
@@ -51,7 +58,10 @@ int main(void)
       }
       case 1:
       {
-        entrar();
+        while (!entrar(listaUsuarios))
+        {
+          entrar(listaUsuarios);
+        }
         break;
       }
     }
@@ -135,10 +145,11 @@ int main(void)
         }
       }
     }
+    break;
     case 2:
-    {
+    Jackpot j(a,100);
+    j.rodarJack(a);
       break;
-    }
   }
 }
 
@@ -291,14 +302,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
   exibirCassino();
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
-  std::cin >> opcao;
 
   if (getOpcao(1) == 0)
   {
     adicionarFundos(nome, email, senha);
-  }
-  else
-  {
+  } else {
     Usuario user(nome, email, senha);
     listaUsuarios.push_back(user);
     exibirCassino();
@@ -307,8 +315,31 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
 }
 
-void entrar() {
+bool entrar(std::vector<Usuario> &listaUsuarios) {
+  bool logado = false;
+  std::string email;
+  std::string senha;
 
+  std::cout << "Digite o seu email: ";
+  std::cin.ignore();
+  std::getline(std::cin, email);
+
+  std::cout << "Digite a sua senha: ";
+  std::getline(std::cin, senha);
+  
+  for (int i = 0; i < listaUsuarios.size(); i++) {
+    if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
+    {
+      logado = true;
+      std::cout << "Login feito com sucesso!" << std::endl;
+      sleep(2);
+      return logado;
+    }
+  }
+
+  std::cout << "Usuario ou senha incorretos!" << std::endl;
+  sleep(2);
+  return logado;
 }
 
 void exibirCassino() {

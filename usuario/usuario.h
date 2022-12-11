@@ -19,6 +19,7 @@ public:
 
     std::string getNome();
     std::string getEmail();
+    std::string getSenha();
     int getSaldo();
 
     void setNome(std::string nome);

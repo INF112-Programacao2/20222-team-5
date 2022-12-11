@@ -26,6 +26,14 @@ int Usuario::getSaldo(){
     return saldo;
 }
 
+std::string Usuario::getEmail() {
+    return email;
+}
+
+std::string Usuario::getSenha() {
+    return senha;
+}
+
 void Usuario::setNome(std::string nome) {
     this->nome = nome;
 };
