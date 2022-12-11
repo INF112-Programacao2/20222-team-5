@@ -2,7 +2,7 @@
 #include <iostream>
 
 MaoBlackjack::MaoBlackjack(){
-    _valorMao = 0;
+    _valorMao = 00;
 };
 
 int MaoBlackjack::getValorMao(){
@@ -10,6 +10,17 @@ int MaoBlackjack::getValorMao(){
 }
 
 void MaoBlackjack::setValorMao(int valor){
-    this->_valorMao = valor; 
+    _valorMao = valor; 
+}
+
+void MaoBlackjack::compraCarta(int valor){
+    _mao.push_back(valor);
+}
+
+void MaoBlackjack::imprimeMao(){
+    for(int i=0;i<_mao.size();i++){
+        std::cout << _mao[i] << " ";
+    }
+    std::cout << std::endl;
 }
 

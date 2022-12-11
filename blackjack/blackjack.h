@@ -5,11 +5,10 @@
 #include "../jogo/jogo.h"
 #include "MaoBlackjack.h"
 #include "baralho.h"
+#include "../usuario/usuario.h"
 
 class Blackjack : public Jogo{
     private:
-//    MaoBlackjack _player;
-//    MaoBlackjack _dealer;
     Baralho _baralho;
     
     public:
@@ -17,9 +16,10 @@ class Blackjack : public Jogo{
     MaoBlackjack _player;
     MaoBlackjack _dealer;
 
-    int sorteiaCarta(MaoBlackjack user);
+    int sorteiaCarta(MaoBlackjack &user);
+    int getOpcao(int max);
 
-    void main();
+    void mainBlackjack(Usuario &user);
     void setPremiacao(double valor);
 };
 

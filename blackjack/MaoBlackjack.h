@@ -1,13 +1,19 @@
 #ifndef MAOBLACKJACK_H
 #define MAOBLACKJACK_H
 
+#include <vector>
+
 class MaoBlackjack{
     private:
     int _valorMao;
-    int _nCartas;
+    std::vector<int>_mao;
  
     public:
     MaoBlackjack();
+
+    void compraCarta(int valor);
+
+    void imprimeMao();
 
     int getValorMao();
 

@@ -18,6 +18,7 @@ class Baralho {
     Baralho();
     int getCarta(int pos);
     void tiraCarta(int pos);
+    void initBaralho();
 
 };
 
