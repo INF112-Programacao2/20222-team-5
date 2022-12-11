@@ -8,6 +8,7 @@
 #include "usuario/emailInvalido.h"
 #include "usuario/limMaxDeCaracteres.h"
 #include "usuario/senhaInvalida.h"
+#include "blackjack/blackjack.h"
 #include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
