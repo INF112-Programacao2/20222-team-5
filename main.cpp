@@ -12,7 +12,7 @@
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
 void criarConta(std::vector<Usuario> &listaUsuarios);
-void entrar();
+bool entrar(std::vector<Usuario> &listaUsuarios);
 void exibirCassino();
 bool verificaAposta(Usuario u, int valor);
 void depositar(Usuario &u);
@@ -48,7 +48,7 @@ int main(void)
       }
       case 1:
       {
-        entrar();
+        entrar(listaUsuarios);
         break;
       }
     }
@@ -297,8 +297,28 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
 }
 
-void entrar() {
+bool entrar(std::vector<Usuario> &listaUsuarios) {
+  bool logado = false;
+  std::string email;
+  std::string senha;
 
+  std::cout << "Digite o seu email: ";
+  std::getline(std::cin, email);
+
+  std::cout << "Digite a sua senha: ";
+  std::getline(std::cin, senha);
+  
+  for (int i = 0; i < listaUsuarios.size(); i++) {
+    if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
+    {
+      logado = true;
+      return logado;
+    }
+  }
+
+  std::cout << "Usuario ou senha incorretos!";
+  sleep(2);
+  return logado;
 };
 
 void exibirCassino() {
