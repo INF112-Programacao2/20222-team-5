@@ -22,6 +22,10 @@ Usuario::Usuario() {}
 
 Usuario::~Usuario() {}
 
+int Usuario::getSaldo(){
+    return saldo;
+}
+
 void Usuario::setNome(std::string nome) {
     this->nome = nome;
 };
