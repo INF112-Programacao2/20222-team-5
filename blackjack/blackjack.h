@@ -17,7 +17,7 @@ class Blackjack : public Jogo{
     MaoBlackjack _dealer;
 
     int sorteiaCarta(MaoBlackjack &user);
-    int getOpcao(int max);
+    int getOpcao1(int max);
 
     void mainBlackjack(Usuario &user);
     void setPremiacao(double valor);

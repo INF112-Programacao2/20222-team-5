@@ -25,6 +25,7 @@ int main(void)
   std::vector<Usuario> listaUsuarios;
   Usuario adm("Admnistrador","adm@adm.com","adm123",200);
   Usuario a("Antonio","antonio@gmail.com","102030",200);
+  Usuario z("zops","zops@zops.com","123456",50000);
   listaUsuarios.push_back(a);
   listaUsuarios.push_back(adm);
   exibirCassino();
@@ -80,6 +81,19 @@ int main(void)
   {
     case 0:
     {
+      bool sair=false;
+      x:
+      Blackjack b;
+      while(!sair){
+        b.mainBlackjack(z);
+        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n";
+        switch(getOpcao(1)){
+          case 0:
+          goto x;
+          case 1:
+          sair=true;
+        }
+      }
       break;
     }
     case 1:

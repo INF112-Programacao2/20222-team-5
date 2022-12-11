@@ -2,7 +2,7 @@
 #include <iostream>
 
 MaoBlackjack::MaoBlackjack(){
-    _valorMao = 00;
+    _valorMao = 0;
 };
 
 int MaoBlackjack::getValorMao(){

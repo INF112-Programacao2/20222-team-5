@@ -3,8 +3,6 @@
 #include <exception>
 #include <unistd.h>
 
-std::string Jogo::nome = "Blackjack";
-
 Blackjack::Blackjack(){
     _player = MaoBlackjack();
     _dealer = MaoBlackjack();
@@ -53,10 +51,15 @@ void Blackjack::mainBlackjack(Usuario &user){
     game._baralho.initBaralho();
     std::cout << "===========================================\nSeja Bem-vindo ao BlackJack!\n===========================================\n";
     std::cout << "Qual sera o valor apostado?: " << std::endl;
-    std::cin >> aposta;
+    try{
+        std::cin >> aposta;
 
-    if(user.getSaldo() < aposta){
-        throw std::invalid_argument("Saldo de fichas insuficiente!");
+        if(user.getSaldo() < aposta){
+            throw std::invalid_argument("Saldo de fichas insuficiente!");
+        }
+    }
+    catch(std::invalid_argument &e){
+        std::cerr << e.what();
     }
 
     user.setSaldo(user.getSaldo()-aposta);
@@ -88,7 +91,7 @@ void Blackjack::mainBlackjack(Usuario &user){
         std::cout << "Voce tem: " << game._player.getValorMao() << " pontos\n";
         std::cout << "\no que voce deseja fazer?: \n(0)-Comprar carta\n(1)-Deixar o dealer comprar\n(2)-Ver suas cartas\n(3)-Ver cartas do dealer\n";
 
-        switch(game.getOpcao(3)){
+        switch(game.getOpcao1(3)){
             case 0:
             std:: cout << "Voce tirou: " << game.sorteiaCarta(game._player) << std::endl;
             goto z;
@@ -148,7 +151,7 @@ void Blackjack::mainBlackjack(Usuario &user){
 
 
 
-int Blackjack::getOpcao(int maximo)
+int Blackjack::getOpcao1(int maximo)
 {
   int opcao;
   while (true)
