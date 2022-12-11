@@ -227,7 +227,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
     }
     
   }
-
+  exibirCassino();
   std::cout << "Digite o seu email: ";
 
   while (true) {
@@ -262,7 +262,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
       std::cerr << e.what() << '\n';
     }
   }
-
+  exibirCassino();
   std::cout << "Digite a sua senha: ";
   
   while (true) {
