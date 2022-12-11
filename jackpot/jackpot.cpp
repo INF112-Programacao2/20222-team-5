@@ -1,6 +1,7 @@
 #include <iostream>
 #include "jackpot.h"
 #include "../jogo/jogo.h"
+#include "../usuario/usuario.h"
 
 Jackpot::Jackpot(Usuario usuario,int posicoes,int premiacoes, Figuras figuras,  int apostaminima){
     _figuras=figuras;
