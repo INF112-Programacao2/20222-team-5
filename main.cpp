@@ -52,7 +52,10 @@ int main(void)
       }
       case 1:
       {
-        entrar(listaUsuarios);
+        while (!entrar(listaUsuarios))
+        {
+          entrar(listaUsuarios);
+        }
         break;
       }
     }
@@ -313,7 +316,7 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
     }
   }
 
-  std::cout << "Usuario ou senha incorretos!";
+  std::cout << "Usuario ou senha incorretos!" << std::endl;
   sleep(2);
   return logado;
 };
