@@ -13,7 +13,7 @@ class Baralho {
     const int J = 10;
     const int Q = 10;
     const int K = 10;
-    int A = 11;
+    const int A = 11;
     
     Baralho();
     int getCarta(int pos);

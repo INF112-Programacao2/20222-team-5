@@ -20,6 +20,7 @@ int Jogo::getValorApostado(){
 int Jogo::getPremiacao(){
     return premiacao;
 }
+
 void Jogo::setValorApostado(double valor){
     valorApostado = valor;
 }
