@@ -5,9 +5,10 @@
 #include<string>
 
 class Figuras{
-    private:
+private:
     std::vector<int>_figuras;
-    public:
+public:
+    Figuras();
     int get_figuras(int sort);
     void sorteiaFiguras();
     void set_figuras(int sort);

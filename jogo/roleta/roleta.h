@@ -12,7 +12,6 @@ private:
   std::string resultado;
   int valorApostado;
   int premiacao;
-
 public:
   Roleta(Usuario user, std::string corAposta, int valorApostado);
 };
