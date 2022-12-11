@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
-#include <stdlib.h>
-#include <vector>
+#include <stdio.h>
 #include <unistd.h>
 #include "usuario/usuario.h"
 #include "jogo/roleta/roleta.h"
-#include "usuario/emailInvalido.h"
+#include "jackpot/jackpot.h"
+#include "jackpot/figuras.h"
+#include "jogo/jogo.h"
 #include "usuario/limMaxDeCaracteres.h"
 #include "usuario/senhaInvalida.h"
+#include "usuario/emailInvalido.h"
 #include "blackjack/blackjack.h"
 #include "jackpot/jackpot.h"
 
@@ -16,6 +18,7 @@ void adicionarFundos(std::string nome, std::string email, std::string senha);
 void criarConta(std::vector<Usuario> &listaUsuarios);
 bool entrar(std::vector<Usuario> &listaUsuarios);
 void exibirCassino();
+void exibirRoleta();
 bool verificaAposta(Usuario u, int valor);
 void depositar(Usuario &u);
 
@@ -89,14 +92,17 @@ int main(void)
       int codigoCor;
       std::string corApostada = "";
       Usuario u("Arthur", "a@email.com", "12345", 100);
+      exibirRoleta();
       std::cout << "Gostaria de apostar em numero ou cor?\n(0) - Numero\n(1) - Cor\n";
       switch(getOpcao(1)){
-        case 0:
-          std::cout << "Digite um numero de 0 a 36:\n";
+      case 0:
+        exibirRoleta();
+        std::cout << "Digite um numero de 0 a 36:\n";
           numeroApostado = getOpcao(36);
           break;
-        case 1:
-          std::cout << "Qual cor?\n(0) - Preto\n(1) - Vermelho\n(2) - Verde\n";
+      case 1:
+        exibirRoleta();
+        std::cout << "Qual cor?\n(0) - Preto\n(1) - Vermelho\n(2) - Verde\n";
           codigoCor = getOpcao(2);
           if(codigoCor == 0){
             corApostada = "Preto";
@@ -107,27 +113,34 @@ int main(void)
           }
           break;
       }
+      exibirRoleta();
       std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
       std::cin >> valorApostado;
       verificaAposta(u, valorApostado);
       Roleta *roleta = new Roleta(u, corApostada, valorApostado, numeroApostado);
       roleta->sorteiaResultado();
-      if(roleta->getFileira() == 0){
+      if (roleta->getFileira() == 0) {
+        exibirRoleta();
         std::cout << "O dado caiu na cor " << roleta->getResultadoCor() << std::endl;
-        if(corApostada == roleta->getResultadoCor()){
-          std::cout << "Parabens voce ganhou!\n Retorno obtido: " << roleta->getPremiacao() << std::endl;
+        if (corApostada == roleta->getResultadoCor()) {
+          std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
           u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
           std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
-        }else{
+        }
+        else {
           std::cout << "Voce perdeu\n";
         }
-      }else{
+      }
+      else {
+        exibirRoleta();
         std::cout << "O dado caiu no numero " << roleta->getResultadoNumero() << std::endl;
         if(numeroApostado == roleta->getResultadoNumero()){
           std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
           u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
           std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
-        }else{
+        }
+        else {
+          exibirRoleta();
           std::cout << "Voce perdeu\n";
         }
       }
@@ -175,11 +188,14 @@ bool verificaAposta(Usuario u, int valor){
   return true;
 }
 
-int getOpcao(int maximo)
+/*int getOpcao(int maximo)
 {
+  Roleta roleta();
+}*/
+
+int getOpcao(int maximo) {
   int opcao;
-  while (true)
-  {
+  while (true) {
     std::cin >> opcao;
     if (opcao >= 0 && opcao <= maximo)
     {
@@ -192,15 +208,14 @@ int getOpcao(int maximo)
   }
 }
 
-void adicionarFundos(std::string nome, std::string email, std::string senha)
-{
+void adicionarFundos(std::string nome, std::string email, std::string senha) {
   int saldo;
   exibirCassino();
   std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
 
   Usuario user(nome, email, senha, saldo);
-};
+}
 
 void criarConta(std::vector<Usuario> &listaUsuarios) {
   bool arroba = false, ponto = false, maiorQue3Char = false;
@@ -250,7 +265,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
         }
       }
       
-      if (email.length() > 20) {
+      if (email.length() > 40) {
         throw limMaxDeCaracteres();
       }
       else if (arroba == false || ponto == false || maiorQue3Char == false) {
@@ -285,7 +300,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
       std::cerr << e.what() << '\n';
     }
   }
-
+  exibirCassino();
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
 
   if (getOpcao(1) == 0)
@@ -294,6 +309,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   } else {
     Usuario user(nome, email, senha);
     listaUsuarios.push_back(user);
+    exibirCassino();
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
     sleep(3);
   }
@@ -324,7 +340,7 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
   std::cout << "Usuario ou senha incorretos!" << std::endl;
   sleep(2);
   return logado;
-};
+}
 
 void exibirCassino() {
   system("cls||clear");
@@ -337,4 +353,17 @@ void exibirCassino() {
   std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
   std::cout << "\n======================================================================================";
   std::cout << "\n======================================================================================\n";
+}
+
+void exibirRoleta() {
+system("cls||clear");
+std::cout << "\n==========================================================================";
+std::cout << "\n==========================================================================";
+std::cout << "\n| RRRRRRR      OOOOOOOO     LLL        EEEEEEEE   TTTTTTTTT       A      |";
+std::cout << "\n| RRR   RR    OO      OO    LLL        EE            TTT         A  A    |";
+std::cout << "\n| RRR RRR     OO      OO    LLL        EEEEE         TTT        A    A   |";
+std::cout << "\n| RRR RR      OO      OO    LLL        EE            TTT       AAAAAAAA  |";
+std::cout << "\n| RRR  RRR     OOOOOOOO     LLLLLLLL   EEEEEEEE      TTT      A        A |";
+std::cout << "\n==========================================================================";
+std::cout << "\n==========================================================================\n";
 }
