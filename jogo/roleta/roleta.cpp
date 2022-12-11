@@ -3,8 +3,6 @@
 #include "../../usuario/usuario.h"
 #include <ctime>
 
-std::string Jogo::nome = "Roleta";
-
 Roleta::Roleta(Usuario user, std::string corAposta, int valorApostado, int numeroAposta)
 {
   this->user = user;
