@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <exception>
 
-Blackjack::Blackjack() : Jogo(){
+std::string Jogo::nome = "Blackjack";
+
+Blackjack::Blackjack(){
     _player = MaoBlackjack();
     _dealer = MaoBlackjack();
 };
@@ -16,25 +18,21 @@ int Blackjack::sorteiaCarta(MaoBlackjack user){
     }
     _baralho.tiraCarta(valor);
 
-    user.setCartas(valor);
+    user.setValorMao(user.getValorMao()+valor);
 
     return valor;
 };
 
-void Blackjack::somaValor(int valor, MaoBlackjack user){
-    user.setValorMao(user.getValorMao()+valor);
-}
-
-void main(Usuario user){
+void mainBlackjack(Usuario user){
     double aposta;
-    Blackjack blackjack();
+    Blackjack game;
     while(true){
         std::cout << "===========================================\nSeja Bem-vindo ao BlackJack!\n===========================================";
         std::cout << "Qual será o valor apostado?: " << std::endl;
         std::cin >> aposta;
 
-        if(user.getFichas() < aposta){
-            throw "Saldo de fichas insuficiente!";
+        if(user.getSaldo() < aposta){
+            throw std::invalid_argument("Saldo de fichas insuficiente!");
         }
 
         user.setSaldo(user.getSaldo()-aposta);

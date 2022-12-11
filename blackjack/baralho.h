@@ -17,7 +17,7 @@ class Baralho {
     
     Baralho();
     int getCarta(int pos);
-    int Baralho::tiraCarta(int pos);
+    void tiraCarta(int pos);
 
 };
 

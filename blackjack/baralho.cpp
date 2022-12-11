@@ -13,6 +13,6 @@ int Baralho::getCarta(int pos){
     return this->_cartas[pos];
 }
 
-int Baralho::tiraCarta(int pos){
+void Baralho::tiraCarta(int pos){
     this->_cartas[pos] = 0;
 }
