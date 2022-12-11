@@ -4,17 +4,24 @@
 #include <string>
 #include "../usuario/usuario.h"
 
-static int apostaMinima;
-static std::string nome;
 class Jogo
 {
+protected:
+  static std::string nome;
+  Usuario user;
+  int valorApostado;
+  int premiacao;
+
 public:
-  virtual int getApostaMinima() = 0;
-  virtual std::string getNome() = 0;
-  virtual int getValorApostado() = 0;
-  virtual int getPremiacao() = 0;
-  virtual void setValorApostado(double valor) = 0;
-  virtual void setPremiacao(double valor) = 0;
+
+  Jogo();
+  ~Jogo();
+  static std::string getNome();
+  Usuario getUsuario();
+  int getValorApostado();
+  int getPremiacao();
+  void setValorApostado(double valor);
+  void setPremiacao(double valor);
 };
 
 #endif

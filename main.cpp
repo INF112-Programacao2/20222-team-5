@@ -329,10 +329,10 @@ system("cls||clear");
 std::cout << "\n==========================================================================";
 std::cout << "\n==========================================================================";
 std::cout << "\n| RRRRRRR      OOOOOOOO     LLL        EEEEEEEE   TTTTTTTTT       A      |";
-std::cout << "\n| RRR   RRR   OO      OO    LLL        EE            TTT         A  A    |";
-std::cout << "\n| RRR  RRR    OO      OO    LLL        EEEEE         TTT        A    A   |";
-std::cout << "\n| RRR RRR     OO      OO    LLL        EE            TTT       AAAAAAAA  |";
-std::cout << "\n| RRR   RRR    OOOOOOOO     LLLLLLLL   EEEEEEEE      TTT      A        A |";
+std::cout << "\n| RRR   RR    OO      OO    LLL        EE            TTT         A  A    |";
+std::cout << "\n| RRR RRR     OO      OO    LLL        EEEEE         TTT        A    A   |";
+std::cout << "\n| RRR RR      OO      OO    LLL        EE            TTT       AAAAAAAA  |";
+std::cout << "\n| RRR  RRR     OOOOOOOO     LLLLLLLL   EEEEEEEE      TTT      A        A |";
 std::cout << "\n==========================================================================";
 std::cout << "\n==========================================================================\n";
 }

@@ -1,4 +1,4 @@
-/*#include "jogo.h"
+#include "jogo.h"
 #include <string>
 
 Jogo::Jogo() {}
@@ -27,4 +27,4 @@ void Jogo::setValorApostado(double valor){
 
 void Jogo::setPremiacao(double valor){
     premiacao = valor;
-}*/
+}
