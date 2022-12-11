@@ -5,11 +5,6 @@ Jogo::Jogo() {}
 
 Jogo::~Jogo() {}
 
-int Jogo::getApostaMinima()
-{
-    return apostaMinima;
-}
-
 std::string Jogo::getNome(){
     return nome;
 }
