@@ -3,8 +3,6 @@
 #include <exception>
 #include <unistd.h>
 
-std::string Jogo::nome = "Blackjack";
-
 Blackjack::Blackjack(){
     _player = MaoBlackjack();
     _dealer = MaoBlackjack();
