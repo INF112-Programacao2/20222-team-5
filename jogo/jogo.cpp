@@ -5,10 +5,6 @@ Jogo::Jogo() {}
 
 Jogo::~Jogo() {}
 
-std::string Jogo::getNome(){
-    return nome;
-}
-
 Usuario Jogo::getUsuario(){ 
     return user;
 }

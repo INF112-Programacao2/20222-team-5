@@ -7,7 +7,6 @@
 class Jogo
 {
 protected:
-  static std::string nome;
   Usuario user;
   int valorApostado;
   int premiacao;
