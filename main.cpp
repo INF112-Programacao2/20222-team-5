@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <vector>
+#include <unistd.h>
 #include "usuario/usuario.h"
 #include "jogo/roleta/roleta.h"
+#include "usuario/emailInvalido.h"
+#include "usuario/limMaxDeCaracteres.h"
+#include "usuario/senhaInvalida.h"
 
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
-void criarConta();
+void criarConta(std::vector<Usuario> &listaUsuarios);
 void entrar();
 void exibirCassino();
 bool verificaAposta(Usuario u, int valor);
@@ -14,24 +19,49 @@ void depositar(Usuario &u);
 
 int main(void)
 {
+  std::vector<Usuario> listaUsuarios;
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
-  std::cout << "(1) - Entrar" << std::endl;
+  if (listaUsuarios.size() > 0)
+  {
+    std::cout << "(1) - Entrar" << std::endl;
+  }
+  
+  
+  if (listaUsuarios.size() > 0)
+  {
+    switch (getOpcao(1))
+    {
+      case 0:
+      {
+        try {
+          criarConta(listaUsuarios);
+        }
+        catch(const std::exception& e) {
+          std::cerr << e.what() << '\n';
+        }
 
-  switch (getOpcao(1))
-  {
-  case 0:
-  {
-    criarConta();
-    break;
+        system("cls||clear");
+        
+        break;
+      }
+      case 1:
+      {
+        entrar();
+        break;
+      }
+    }
   }
-  case 1:
-  {
-    entrar();
-    break;
+  else {
+    
+      criarConta(listaUsuarios);
+    
+    
+    system("cls||clear");
   }
-  }
+
+  exibirCassino();
   std::cout << "Qual jogo gostaria de jogar?" << std::endl;
   std::cout << "(0) - Blackjack" << std::endl;
   std::cout << "(1) - Roleta" << std::endl;
@@ -161,8 +191,9 @@ void adicionarFundos(std::string nome, std::string email, std::string senha)
   Usuario user(nome, email, senha, saldo);
 };
 
-void criarConta()
-{
+void criarConta(std::vector<Usuario> &listaUsuarios) {
+  bool arroba = false, ponto = false, maiorQue3Char = false;
+
   std::string nome;
   std::string email;
   std::string senha;
@@ -170,30 +201,80 @@ void criarConta()
   exibirCassino();
   std::cout << "Digite o seu nome: ";
 
-  std::cin.ignore();
-  std::getline(std::cin, nome);
-
-  while (nome.length() > 20)
-  {
-    std::cout << "No maximo 20 caracteres, tente novamente: ";
-    std::getline(std::cin, nome);
+  while (true) {
+    try {
+      std::cin.ignore();
+      std::getline(std::cin, nome);
+      
+      if (nome.length() > 20) {
+        throw limMaxDeCaracteres();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
+    
   }
-  system("cls||clear");
-  exibirCassino();
+
   std::cout << "Digite o seu email: ";
-  std::getline(std::cin, email);
 
-  exibirCassino();
-  std::cout << "Digite a sua senha: ";
-  std::getline(std::cin, senha);
+  while (true) {
+    try {
+  
+      std::getline(std::cin, email);
 
-  while (senha.length() > 20 || senha.length() < 6)
-  {
-    std::cout << "No minimo 6 e no maximo 20 caracteres, tente novamente: ";
-    std::getline(std::cin, senha);
+      for (int i = 0; i < email.length(); i++) {
+        if (email[i] == '@') {
+          arroba = true;
+        }
+        else if (email[i] == '.') {
+          ponto = true;
+        }
+        else if (email.length() > 3) {
+          maiorQue3Char = true;
+        }
+      }
+      
+      if (email.length() > 20) {
+        throw limMaxDeCaracteres();
+      }
+      else if (arroba == false || ponto == false || maiorQue3Char == false) {
+        throw emailInvalido();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
   }
 
-  exibirCassino();
+  std::cout << "Digite a sua senha: ";
+  
+  while (true) {
+    try {
+  
+      std::getline(std::cin, senha);
+      
+      if (senha.length() > 20 || senha.length() < 6) {
+        throw senhaInvalida();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
+  }
+
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
   std::cin >> opcao;
 
@@ -210,9 +291,10 @@ void criarConta()
   else
   {
     Usuario user(nome, email, senha);
+    listaUsuarios.push_back(user);
+    std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
+    sleep(3);
   }
-  
-  std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
 }
 
 void entrar() {
