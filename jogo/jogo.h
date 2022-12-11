@@ -6,8 +6,7 @@
 
 class Jogo
 {
-private:
-  static int apostaMinima;
+protected:
   static std::string nome;
   Usuario user;
   int valorApostado;
@@ -17,7 +16,6 @@ public:
 
   Jogo();
   ~Jogo();
-  static int getApostaMinima();
   static std::string getNome();
   Usuario getUsuario();
   int getValorApostado();
