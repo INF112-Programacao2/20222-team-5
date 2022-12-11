@@ -8,8 +8,7 @@ Usuario::Usuario(std::string nome, std::string email, std::string senha)
     this->email = email;
     this->senha = senha;
     this->saldo = 0;
-    this->fichas = 0;
-}
+};
 
 Usuario::Usuario(std::string nome, std::string email, std::string senha, int saldo)
 {
@@ -17,8 +16,7 @@ Usuario::Usuario(std::string nome, std::string email, std::string senha, int sal
     this->email = email;
     this->senha = senha;
     this->saldo = saldo;
-    this->fichas = 0;
-}
+};
 
 Usuario::Usuario() {}
 
@@ -26,8 +24,16 @@ Usuario::~Usuario() {}
 
 void Usuario::setNome(std::string nome) {
     this->nome = nome;
-}
+};
 
 void Usuario::setEmail(std::string email) {
     this->email = email;
-}
+};
+
+void Usuario::setSenha(std::string senha) {
+    this->senha = senha;
+};
+
+void Usuario::setSaldo(int saldo) {
+    this->saldo = saldo;
+};

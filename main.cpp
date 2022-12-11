@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include "jogo/roleta/roleta.h"
+#include "jogo/jogo.h"
 #include "usuario/usuario.h"
 #include "jogo/roleta/roleta.h"
 
