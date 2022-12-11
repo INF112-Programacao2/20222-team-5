@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <exception>
 
-Blackjack::Blackjack(std::string nome, int apostaMinima) : Jogo(nome,apostaMinima){
+Blackjack::Blackjack() : Jogo(){
     _player = MaoBlackjack();
     _dealer = MaoBlackjack();
 };
@@ -27,6 +27,7 @@ void Blackjack::somaValor(int valor, MaoBlackjack user){
 
 void main(Usuario user){
     double aposta;
+    Blackjack blackjack();
     while(true){
         std::cout << "===========================================\nSeja Bem-vindo ao BlackJack!\n===========================================";
         std::cout << "Qual será o valor apostado?: " << std::endl;
@@ -37,13 +38,9 @@ void main(Usuario user){
         }
 
         user.setSaldo(user.getSaldo()-aposta);
-        
-        Blackjack blackjack("Blackjack", Jogo::getApostaMinima());
 
         while(true){
             std::cout << "O jogo comecou!\n";
-
-
         }
     }
 }

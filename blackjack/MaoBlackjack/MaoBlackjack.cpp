@@ -7,7 +7,7 @@ MaoBlackjack::MaoBlackjack(){
 };
 
 int MaoBlackjack::getCartas(int i){
-    return this->_cartas[i];
+    return this->_mao[i];
 }
 int MaoBlackjack::setCartas(int carta){
     this->_cartas[_nCartas + 1] = carta;

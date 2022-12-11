@@ -1,31 +1,29 @@
 #include "jogo.h"
-#include <iostream>
 #include <string>
 
-int Jogo::getApostaMinima()
-{
-    return _apostaMinima;
-}
+Jogo::Jogo() {}
+
+Jogo::~Jogo() {}
 
 std::string Jogo::getNome(){
-    return _nome;
+    return nome;
 }
 
 Usuario Jogo::getUsuario(){ 
+    return user;
 }
 
 int Jogo::getValorApostado(){
-    return _valorApostado;
+    return valorApostado;
 }
 
 int Jogo::getPremiacao(){
-    return _premiacao;
+    return premiacao;
 }
-
-void Jogo::setValorApostado(int valor){
-    this->_valorApostado = valor; 
+void Jogo::setValorApostado(double valor){
+    valorApostado = valor;
 }
 
 void Jogo::setPremiacao(double valor){
-    _premiacao = valor;
+    premiacao = valor;
 }

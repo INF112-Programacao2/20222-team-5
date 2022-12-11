@@ -5,7 +5,8 @@ class MaoBlackjack{
     private:
     int _valorMao;
     int _nCartas;
-    int _cartas[10] = {0,0,0,0,0,0,0,0,0,0};
+//    int _mao[10] = {0,0,0,0,0,0,0,0,0,0};
+    std::vector<int> _mao;
     public:
     MaoBlackjack();
 

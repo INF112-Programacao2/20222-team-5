@@ -1,3 +1,6 @@
+#ifndef BLACKJACK
+#define BLACKJACK
+
 #include <iostream>
 #include "jogo.h"
 #include "MaoBlackjack.h"
@@ -10,7 +13,7 @@ class Blackjack : public Jogo{
     Baralho _baralho;
     
     public:
-    Blackjack(std::string nome, int apostaMinima);
+    Blackjack();
 
     int sorteiaCarta(MaoBlackjack user);
 
@@ -18,3 +21,5 @@ class Blackjack : public Jogo{
     void main();
     void setPremiacao(double valor);
 };
+
+#endif

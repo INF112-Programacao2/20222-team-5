@@ -1,17 +1,24 @@
+#ifndef JACKPOT
+#define JACKPOT
 #include <iostream>
 #include "../jogo/jogo.h"
-#include "../../usuario/usuario.h"
+#include "../usuario/usuario.h"
+#include "figuras.h"
 
 class Jackpot:public Jogo{
     private:
     Usuario usuario;
     int *posicoes;
     int *premiacoes;
-    int apostaMinima;
+    int _apostaMinima;
+    Figuras _figuras;
     public:
-    Jackpot(Usuario usuario,int posicoes, int premiacoes);
-    int getPosicoes();
-    int getPremiacoes();
-    void setPosicoes();
-    void setPremiacoes();
+    Jackpot(Usuario usuario,int posicoes, int premiacoes, Figuras figuras, int apostaminima);
+    void rodarJack(Usuario usuario);
+    // int getPremiacoes();
+    // void setPosicoes();
+    // void setPremiacoes();
+    void valorAposta();
 };
+
+#endif
