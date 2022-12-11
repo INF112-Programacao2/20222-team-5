@@ -28,10 +28,12 @@ int Figuras::sorteiaFigurascorretas()
 int Figuras::sorteioGeral()
 { // sorteia se vai se figuras corretas o figuras diferentes, de 1 para 10 para dar certo
   int sorteia;
+  int sorteia2;
   unsigned seed = time(0);    // faz com que o seed n de igual sempre
   srand(seed);                // randomiza o seed
   sorteia = std::rand() % 10; // sorteia de 1 a 10
-  if (sorteia == 1)
+  sorteia2= std::rand() % 10; //sorteia de 1 a 10 para nao dar o mesmo numero
+  if (sorteia == sorteia2)
   {
     return sorteiaFigurascorretas(); // retorna para dar certo caso sorteia=1
   }
