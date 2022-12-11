@@ -123,13 +123,12 @@ int main(void)
         }
       }
     }
+    break;
     case 2:
-    Usuario a("Antonio","antonio@gmail.com","102030",200 );
+    Usuario a("Antonio","antonio@gmail.com","102030",200);
     Jackpot j(a,100);
     j.rodarJack(a);
-    {
       break;
-    }
   }
 }
 
