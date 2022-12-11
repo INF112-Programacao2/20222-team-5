@@ -1,18 +1,17 @@
 #include<iostream>
 #include"figuras.h"
+#include "ctime"
+#include<unistd.h>
 
-Figuras::Figuras(){
-   _figuras={
-     1,2,3,4,5
-   };
-}
+Figuras::Figuras(){}
 int Figuras::get_figuras(int sort){
-  return this-> _figuras[sort];
+  return _figuras[sort];
 }
-void Figuras::sorteiaFiguras(){
+int Figuras::sorteiaFiguras(){
+  sleep(1);
+  unsigned seed = time(0);
+  srand(seed);
    int sorteia;
    sorteia= std::rand() % 5;
-}
-void set_figuras(int figuras[],int sort){
-  
+   return sorteia;
 }

@@ -8,6 +8,7 @@
 #include "usuario/emailInvalido.h"
 #include "usuario/limMaxDeCaracteres.h"
 #include "usuario/senhaInvalida.h"
+#include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
@@ -123,6 +124,9 @@ int main(void)
       }
     }
     case 2:
+    Usuario a("Antonio","antonio@gmail.com","102030",200 );
+    Jackpot j(a,100);
+    j.rodarJack(a);
     {
       break;
     }
