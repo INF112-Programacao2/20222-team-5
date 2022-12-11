@@ -14,7 +14,7 @@ class Jackpot:public Jogo{
     Figuras _figuras;
     public:
     Jackpot(Usuario usuario,int posicoes, int premiacoes, Figuras figuras, int apostaminima);
-    int rodarJack(Usuario usuario);
+    void rodarJack(Usuario usuario);
     // int getPremiacoes();
     // void setPosicoes();
     // void setPremiacoes();
