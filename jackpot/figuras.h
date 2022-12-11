@@ -10,6 +10,7 @@ class Figuras{
     public:
     int get_figuras(int sort);
     void sorteiaFiguras();
+    void set_figuras(int sort);
 };
 
 #endif
