@@ -1,63 +1,198 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include <unistd.h>
 #include "usuario/usuario.h"
-//#include "jogo/roleta/roleta.h"
+#include "jogo/roleta/roleta.h"
 #include "jackpot/jackpot.h"
 #include "jackpot/figuras.h"
-//#include "jogo/jogo.h"
+#include "jogo/jogo.h"
+#include "usuario/limMaxDeCaracteres.h"
+#include "usuario/senhaInvalida.h"
+#include "usuario/emailInvalido.h"
 
-int getOpcao(int);
+int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
-void criarConta();
+void criarConta(std::vector<Usuario> &listaUsuarios);
 void entrar();
 void exibirCassino();
+void exibirRoleta();
+bool verificaAposta(Usuario u, int valor);
+void depositar(Usuario &u);
 
 int main(void)
 {
+  std::vector<Usuario> listaUsuarios;
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
-  std::cout << "(1) - Entrar" << std::endl;
-
-  switch (getOpcao(1)) {
-  case 0:
-    criarConta();
-    break;
-  case 1:
-    entrar();
-    break;
+  if (listaUsuarios.size() > 0)
+  {
+    std::cout << "(1) - Entrar" << std::endl;
   }
+  
+  
+  if (listaUsuarios.size() > 0)
+  {
+    switch (getOpcao(1))
+    {
+      case 0:
+      {
+        try {
+          criarConta(listaUsuarios);
+        }
+        catch(const std::exception& e) {
+          std::cerr << e.what() << '\n';
+        }
+
+        system("cls||clear");
+        
+        break;
+      }
+      case 1:
+      {
+        entrar();
+        break;
+      }
+    }
+  }
+  else {
+    
+      criarConta(listaUsuarios);
+    
+    
+    system("cls||clear");
+  }
+
+  exibirCassino();
   std::cout << "Qual jogo gostaria de jogar?" << std::endl;
   std::cout << "(0) - Blackjack" << std::endl;
   std::cout << "(1) - Roleta" << std::endl;
   std::cout << "(2) - Jackpot" << std::endl;
-  switch (getOpcao(1)) {
-
-  case 0:
-    break;
-  case 1:
-    // Roleta roleta = criarJogoRoleta();
-    break;
-  case 2:
-    break;
+  switch (getOpcao(2))
+  {
+    case 0:
+    {
+      break;
+    }
+    case 1:
+    {
+      int numeroApostado = -1;
+      int valorApostado = 0;
+      int codigoCor;
+      std::string corApostada = "";
+      Usuario u("Arthur", "a@email.com", "12345", 100);
+      exibirRoleta();
+      std::cout << "Gostaria de apostar em numero ou cor?\n(0) - Numero\n(1) - Cor\n";
+      switch(getOpcao(1)){
+      case 0:
+        exibirRoleta();
+        std::cout << "Digite um numero de 0 a 36:\n";
+          numeroApostado = getOpcao(36);
+          break;
+      case 1:
+        exibirRoleta();
+        std::cout << "Qual cor?\n(0) - Preto\n(1) - Vermelho\n(2) - Verde\n";
+          codigoCor = getOpcao(2);
+          if(codigoCor == 0){
+            corApostada = "Preto";
+          }else if(codigoCor == 1){
+            corApostada = "Vermelho";
+          }else{
+            corApostada = "Verde";
+          }
+          break;
+      }
+      exibirRoleta();
+      std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+      std::cin >> valorApostado;
+      verificaAposta(u, valorApostado);
+      Roleta *roleta = new Roleta(u, corApostada, valorApostado, numeroApostado);
+      roleta->sorteiaResultado();
+      if (roleta->getFileira() == 0) {
+        exibirRoleta();
+        std::cout << "O dado caiu na cor " << roleta->getResultadoCor() << std::endl;
+        if (corApostada == roleta->getResultadoCor()) {
+          std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
+          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+        }
+        else {
+          std::cout << "Voce perdeu\n";
+        }
+      }
+      else {
+        exibirRoleta();
+        std::cout << "O dado caiu no numero " << roleta->getResultadoNumero() << std::endl;
+        if(numeroApostado == roleta->getResultadoNumero()){
+          std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
+          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+        }
+        else {
+          exibirRoleta();
+          std::cout << "Voce perdeu\n";
+        }
+      }
+    }
+    case 2:
+    {
+      break;
+    }
   }
 }
 
-/*Roleta criarJogoRoleta()
+void depositar(Usuario &u){
+  int valor;
+  std::cout << "Quanto quer depositar?\n";
+  std::cin >> valor;
+  valor += u.getSaldo();
+  u.setSaldo(valor);
+}
+
+bool verificaAposta(Usuario u, int valor){
+  if(valor > u.getSaldo()){
+    std::cout << "Voce nao tem esse saldo, gostaria de depositar mais ou digitar outro valor?\n(0) - Depositar mais\n(1) - Digitar outro valor\n";
+        switch(getOpcao(1)){
+          case 0:
+            depositar(u);
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            std::cin >> valor;
+            verificaAposta(u, valor);
+          break;
+          case 1:
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            std::cin >> valor;
+            verificaAposta(u, valor);
+          break;
+        }
+    return false;
+  }
+  if(valor <= 0){
+    std::cout << "Por favor digite um numero maior que 0:\n";
+    std::cin >> valor;
+    verificaAposta(u, valor);
+  }
+  u.setSaldo((u.getSaldo() - valor));
+  return true;
+}
+
+/*int getOpcao(int maximo)
 {
-  Roleta roleta()
+  Roleta roleta();
 }*/
 
 int getOpcao(int maximo) {
   int opcao;
   while (true) {
     std::cin >> opcao;
-    if (opcao >= 0 || opcao <= maximo) {
+    if (opcao >= 0 && opcao <= maximo)
+    {
       return opcao;
     }
-    else {
-      std::cout << "Opção invalida, por favor digite um número entre 0 e " << maximo << std::endl;
+    else
+    {
+      std::cout << "Opcao invalida, por favor digite um número entre 0 e " << maximo << std::endl;
     }
   }
 }
@@ -65,13 +200,15 @@ int getOpcao(int maximo) {
 void adicionarFundos(std::string nome, std::string email, std::string senha) {
   int saldo;
   exibirCassino();
-  std::cout << "Quanto voce deseja adicionar a sua carteira?: ";
+  std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
 
   Usuario user(nome, email, senha, saldo);
 }
 
-void criarConta() {
+void criarConta(std::vector<Usuario> &listaUsuarios) {
+  bool arroba = false, ponto = false, maiorQue3Char = false;
+
   std::string nome;
   std::string email;
   std::string senha;
@@ -79,46 +216,95 @@ void criarConta() {
   exibirCassino();
   std::cout << "Digite o seu nome: ";
 
-  std::cin.ignore();
-  std::getline(std::cin, nome);
-
-  while (nome.length() > 20) {
-    std::cout << "No maximo 20 caracteres, tente novamente: ";
-    std::getline(std::cin, nome);
+  while (true) {
+    try {
+      std::cin.ignore();
+      std::getline(std::cin, nome);
+      
+      if (nome.length() > 20) {
+        throw limMaxDeCaracteres();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
+    
   }
-  system("cls||clear");
   exibirCassino();
   std::cout << "Digite o seu email: ";
-  std::getline(std::cin, email);
 
+  while (true) {
+    try {
+  
+      std::getline(std::cin, email);
+
+      for (int i = 0; i < email.length(); i++) {
+        if (email[i] == '@') {
+          arroba = true;
+        }
+        else if (email[i] == '.') {
+          ponto = true;
+        }
+        else if (email.length() > 3) {
+          maiorQue3Char = true;
+        }
+      }
+      
+      if (email.length() > 40) {
+        throw limMaxDeCaracteres();
+      }
+      else if (arroba == false || ponto == false || maiorQue3Char == false) {
+        throw emailInvalido();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
+  }
   exibirCassino();
   std::cout << "Digite a sua senha: ";
-  std::getline(std::cin, senha);
-
-  while (senha.length() > 20 || senha.length() < 6) {
-    std::cout << "\nNo minimo 6 e no maximo 20 caracteres, tente novamente: ";
-    std::getline(std::cin, senha);
+  
+  while (true) {
+    try {
+  
+      std::getline(std::cin, senha);
+      
+      if (senha.length() > 20 || senha.length() < 6) {
+        throw senhaInvalida();
+      }
+      else {
+        break;
+      }
+    }
+    catch(const std::exception& e) {
+      exibirCassino();
+      std::cerr << e.what() << '\n';
+    }
   }
-
   exibirCassino();
   std::cout << "Quer adicionar saldos a sua conta? (0) - Sim, (1) - Nao\n";
   std::cin >> opcao;
 
-  while (opcao != 0 && opcao != 1) {
-    std::cout << "Opcao invalida, tente novamente:";
-    std::cin >> opcao;
-  }
-
-  if (opcao == 0) {
+  if (getOpcao(1) == 0)
+  {
     adicionarFundos(nome, email, senha);
   }
-  else {
-    Usuario* user = new Usuario(nome, email, senha);
+  else
+  {
+    Usuario user(nome, email, senha);
+    listaUsuarios.push_back(user);
+    exibirCassino();
+    std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
+    sleep(3);
   }
-
-  system("cls||clear");
-  exibirCassino();
-  std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
 }
 
 void entrar() {
@@ -136,4 +322,17 @@ void exibirCassino() {
   std::cout << "\n|     CCCCC  A        A   SSSSSSSSS   SSSSSSSSS   IIIIIIIII  NN     NN    OOOOOOOO   |";
   std::cout << "\n======================================================================================";
   std::cout << "\n======================================================================================\n";
+}
+
+void exibirRoleta() {
+system("cls||clear");
+std::cout << "\n==========================================================================";
+std::cout << "\n==========================================================================";
+std::cout << "\n| RRRRRRR      OOOOOOOO     LLL        EEEEEEEE   TTTTTTTTT       A      |";
+std::cout << "\n| RRR   RRR   OO      OO    LLL        EE            TTT         A  A    |";
+std::cout << "\n| RRR  RRR    OO      OO    LLL        EEEEE         TTT        A    A   |";
+std::cout << "\n| RRR RRR     OO      OO    LLL        EE            TTT       AAAAAAAA  |";
+std::cout << "\n| RRR   RRR    OOOOOOOO     LLLLLLLL   EEEEEEEE      TTT      A        A |";
+std::cout << "\n==========================================================================";
+std::cout << "\n==========================================================================\n";
 }
