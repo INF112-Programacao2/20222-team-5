@@ -31,7 +31,8 @@ baralho.o: blackjack/baralho.cpp blackjack/baralho.h
 	g++ -c blackjack/baralho.cpp
 
 run: cassino
+	./cassino
 	./cassino.exe
 
 clean: 
-	rm *.o cassino.exe
+	rm *.o cassino.exe cassino
