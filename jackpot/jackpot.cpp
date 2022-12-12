@@ -233,10 +233,10 @@ void Jackpot::adicionarFundos(Usuario &usuario) // funcao adicionar fundos caso 
         usuario.setSaldo((usuario.getSaldo() + adiciona));
         while(true){
             std::cout << "Seu saldo: " << usuario.getSaldo() << std::endl;
-            std::cout << "Saldo tem que ser no minimo" << _apostaminima << std::endl;
+            std::cout << "Saldo tem que ser no minimo " << _apostaminima << std::endl;
             std::cin >> adiciona;
             usuario.setSaldo((usuario.getSaldo() + adiciona));// soma os valores adicionados ao saldo do usuario
-            if((usuario.getSaldo()+adiciona)>10){
+            if((usuario.getSaldo()+adiciona)>=10){
                 break;
             }
         }
