@@ -8,5 +8,5 @@ public:
 
 const char *emailInvalido::what() const noexcept
 {
-    return "Insira um email valido!";
+    return "Insira um email valido, com no maximo 40 caracteres!";
 }
