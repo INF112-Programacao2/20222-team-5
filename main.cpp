@@ -32,13 +32,13 @@ int main(void)
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
-  if (listaUsuarios.size() > 0)
+  if (listaUsuarios.size() > 0) //se a lista de usuarios estiver vazia so aparecera a opcao de criar conta
   {
     std::cout << "(1) - Entrar" << std::endl;
   }
   
   
-  if (listaUsuarios.size() > 0)
+  if (listaUsuarios.size() > 0) //se a lista de usuarios nao estiver vazia sera possivel entrar e criar uma nova conta
   {
     switch (getOpcao(1))
     {
@@ -64,10 +64,9 @@ int main(void)
       }
     }
   }
-  else {
+  else { //caso a lista de usuarios esteja vazia ira direto para a funcao de criar conta
     
       criarConta(listaUsuarios, indiceUsuarioLogado);
-    
     
     system("cls||clear");
   }
@@ -219,7 +218,7 @@ Usuario adicionarFundos(std::string nome, std::string email, std::string senha) 
   exibirCassino();
   std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
-  Usuario user(nome, email, senha, saldo);
+  Usuario user(nome, email, senha, saldo); //segundo metodo construtor de usuario(polimorfismo)
   return user;
 }
 
@@ -238,14 +237,14 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
       std::cin.ignore();
       std::getline(std::cin, nome);
       
-      if (nome.length() > 20) {
+      if (nome.length() > 20) { //se o nome tiver mais de 20 caracteres lanca a excecao
         throw limMaxDeCaracteres();
       }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
-    catch(const std::exception& e) {
+    catch(const std::exception& e) { //pega a excecao de mais de 20 caracteres no nome
       exibirCassino();
       std::cerr << e.what() << '\n';
     }
@@ -259,7 +258,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
   
       std::getline(std::cin, email);
 
-      for (int i = 0; i < email.length(); i++) {
+      for (int i = 0; i < email.length(); i++) { //verifica se no email existe "@" e "." e se tem mais de 3 caracteres 
         if (email[i] == '@') {
           arroba = true;
         }
@@ -271,14 +270,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
         }
       }
       
-      if (email.length() > 40) {
-        throw limMaxDeCaracteres();
-      }
-      else if (arroba == false || ponto == false || maiorQue3Char == false) {
+      if (arroba == false || ponto == false || maiorQue3Char == false || email.length() > 40) { // verifica as validacoes anteriores e se o email tem mais de 40 caracteres, e lanca uma excecao
         throw emailInvalido();
       }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
     catch(const std::exception& e) {
@@ -294,11 +290,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
   
       std::getline(std::cin, senha);
       
-      if (senha.length() > 20 || senha.length() < 6) {
+      if (senha.length() > 20 || senha.length() < 6) { //verifica se a senha tem entre 6 e 20 caracteres, se nao, lanca uma excecao
         throw senhaInvalida();
       }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
     catch(const std::exception& e) {
@@ -311,10 +307,10 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
 
   if (getOpcao(1) == 0)
   {
-    listaUsuarios.push_back(adicionarFundos(nome, email, senha));
+    listaUsuarios.push_back(adicionarFundos(nome, email, senha)); //se o usuario selecionar a opcao 0 insere o usuario da funcao adicionar fundos na lista de usuarios
   } else {
-    Usuario user(nome, email, senha);
-    listaUsuarios.push_back(user);
+    Usuario user(nome, email, senha); //se o usuario optar por nao adcionar saldo a sua conta cria o usuario sem saldo
+    listaUsuarios.push_back(user); //insere o usuario sem saldo na lista de usuarios
     exibirCassino();
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
     sleep(3);
@@ -322,14 +318,14 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
   indiceUsuarioLogado = (listaUsuarios.size()-1);
 }
 
-bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p) {
+bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p) { 
   bool logado = false;
   std::string email;
   std::string senha;
 
   std::cout << "Digite o seu email: ";
-  if (p == true) {
-    p = false;
+  if (p == true) { // se for a primeira vez que esta chamando a funcao deve dar um ignore para que seja possivel ler corretamente os dados
+    p = false;     // seta p como false para nao entrar mais nesse if
     std::cin.ignore();
   }
   
@@ -338,17 +334,17 @@ bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &
   std::cout << "Digite a sua senha: ";
   std::getline(std::cin, senha);
   
-  for (int i = 0; i < listaUsuarios.size(); i++) {
+  for (int i = 0; i < listaUsuarios.size(); i++) { //verifica dentro da lista de usuarios se existe um email e senha compativeis
     if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
     {
       logado = true;
       std::cout << "Login feito com sucesso!" << std::endl;
       sleep(2);
-      indiceUsuarioLogado = i;
-      return logado;
+      indiceUsuarioLogado = i; //modifica o valor de indice usuario logado para passar para as funcoes de jogos
+      return logado; //retorna o usuario logado
     }
   }
-  std::cout << "Usuario ou senha incorretos!" << std::endl;
+  std::cout << "Usuario ou senha incorretos!" << std::endl; //se nao existir nenhum email e senha compativeis na lista de usuarios retorna um logado = false
   sleep(2);
   return logado;
 }
