@@ -36,7 +36,7 @@ int main(void)
   {
     std::cout << "(1) - Entrar" << std::endl;
   }
-  
+      
   
   if (listaUsuarios.size() > 0) //se a lista de usuarios nao estiver vazia sera possivel entrar e criar uma nova conta
   {
@@ -85,7 +85,7 @@ int main(void)
       Blackjack b;
       while(!sair){
         b.mainBlackjack(listaUsuarios[indiceUsuarioLogado]);
-        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n";
+        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n"; // loop para o jogador decidir quando quer parar de jogar
         switch(getOpcao(1)){
           case 0:
           goto x;
