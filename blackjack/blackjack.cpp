@@ -50,16 +50,13 @@ void Blackjack::mainBlackjack(Usuario &user){
     
     game._baralho.initBaralho();
     std::cout << "===========================================\nSeja Bem-vindo ao BlackJack!\n===========================================\n";
+    w:
     std::cout << "Qual sera o valor apostado?: " << std::endl;
-    try{
-        std::cin >> aposta;
+    std::cin >> aposta;
 
-        if(user.getSaldo() < aposta){
-            throw std::invalid_argument("Saldo de fichas insuficiente!");
-        }
-    }
-    catch(std::invalid_argument &e){
-        std::cerr << e.what();
+    if(user.getSaldo() < aposta){
+        std::cout << "Saldo de fichas insuficiente!" << std::endl;
+        goto w;
     }
 
     user.setSaldo(user.getSaldo()-aposta);
@@ -163,7 +160,7 @@ int Blackjack::getOpcao1(int maximo)
     }
     else
     {
-      std::cout << "Opcao invalida, por favor digite um número entre 0 e " << maximo << std::endl;
+      std::cout << "Opcao invalida, por favor digite um numero entre 0 e " << maximo << std::endl;
     }
   }
 }
