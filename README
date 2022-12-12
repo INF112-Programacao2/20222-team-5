@@ -8,3 +8,7 @@ Antônio Gabriel Souza Gomes - 108188
 
 O grupo realizou a implementação de um sistema de casa de apostas com jogos comuns em cassino, Blackjack (conhecido tambèm como 21), Jackpot (caça niquél)
 e Roleta.  
+
+Segue em anexo o makefile para compilacao do código, que também pode ser compilado manualmente pelo terminal através de:
+g++ main.cpp jogo/jogo.cpp jogo/roleta/roleta.cpp jackpot/jackpot.cpp blackjack/blackjack.cpp usuario/usuario.cpp jackpot/figuras.cpp blackjack/MaoBlackjack.cpp blackjack/baralho.cpp
+
