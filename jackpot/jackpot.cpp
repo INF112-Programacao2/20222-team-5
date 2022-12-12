@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include <stdexcept>
 
+void exibirJackpot();
+
 Jackpot::Jackpot(Usuario usuario, int aposta)
 {
     this->_aposta = aposta;
@@ -47,6 +49,7 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
     int aposta;                       // implementada para escolher o valor apostado
     int zero;                         // iniciador do jogo, rodar o jackpot
     int pos[3];                       // 3 posicoes do jackpot
+    exibirJackpot();
     std::cout << "Bem-vindo(a) ao Jackpot!! " << std::endl;
     std::cout << "Voce desejar:\n [0]- Sair\n [1]- Depositar para jogar\n";
     try
@@ -70,11 +73,13 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
         if (usuario.getSaldo() < _apostaminima) // caso o usuario tenha menos que a aposta minima, insere valor da aposta, herda usuario
         {
             int adc;
+            exibirJackpot();
             std::cout << "Saldo menor que aposta minima :(\n";
             adicionarFundos(usuario); // Funcao craida para adicionar saldo na conta,herda usuario
              std::cout << "Seu novo saldo: " << usuario.getSaldo() << std::endl; 
         }
-        std::cout << "Escolha o valor que deseja apostar: " << std::endl;    
+        exibirJackpot();
+        std::cout << "Escolha o valor que deseja apostar: " << std::endl;
         std::cout << "Voce tem: " << usuario.getSaldo() << std::endl;
         std::cout << "Aposta minima: " << _apostaminima << std::endl;    //aposta minima setada para 10
         try
@@ -139,6 +144,7 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
             }
         }
     }
+    exibirJackpot();
     std::cout << "Girando o Jackpot!!" << std::endl; // Gira o Jackpot
     for (int i = 0; i < 3; i++)
     {
@@ -239,7 +245,7 @@ int Jackpot::repetirJogada(Usuario &usuario) // repete a jogada
 void Jackpot::adicionarFundos(Usuario &usuario) // funcao adicionar fundos caso o saldo seja menor que a aposta minima
 {
     int adiciona;
-    std::cout << "Indique o valor que deseja depositar:\n ";  
+    std::cout << "Indique o valor que deseja depositar:\n ";
     std::cin >> adiciona;
     if ((usuario.getSaldo() + adiciona) < 10) //se for menor que 10, ele tem q adicionar mais para continuar jogando
     {
@@ -256,4 +262,17 @@ void Jackpot::adicionarFundos(Usuario &usuario) // funcao adicionar fundos caso 
             }
         }
     }
+}
+
+void exibirJackpot() {
+  system("cls||clear");
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n|       JJJ      A          CCCCC     KKK    KK   PPPPPPP    OOOOOOOO    TTTTTTTTT   |";
+  std::cout << "\n|       JJJ     A  A      CC          KKK   KK    PPP   PP  OO      OO      TTT      |";
+  std::cout << "\n|       JJJ    A    A    CC           KKK KK      PPP PPP   OO      OO      TTT      |";
+  std::cout << "\n| JJJ   JJJ   AAAAAAAA    CC          KKK   KK    PPP       OO      OO      TTT      |";
+  std::cout << "\n|   JJJJJ    A        A     CCCCC     KKK    KK   PPP        OOOOOOOO       TTT      |";
+  std::cout << "\n======================================================================================";
+  std::cout << "\n======================================================================================\n";
 }

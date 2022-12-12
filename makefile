@@ -1,7 +1,7 @@
 all: cassino
 
 cassino: main.o usuario.o jogo.o roleta.o jackpot.o figuras.o MaoBlackjack.o blackjack.o baralho.o
-	g++ -o cassino.exe main.o usuario.o jogo.o roleta.o jackpot.o figuras.o MaoBlackjack.o blackjack.o baralho.o
+	g++ -o cassino main.o usuario.o jogo.o roleta.o jackpot.o figuras.o MaoBlackjack.o blackjack.o baralho.o
 
 main.o: main.cpp
 	g++ -c main.cpp
