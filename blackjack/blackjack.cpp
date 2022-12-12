@@ -1,5 +1,6 @@
 #include "blackjack.h"
 #include <cstdlib>
+#include <ctime>
 #include <exception>
 #include <unistd.h>
 
