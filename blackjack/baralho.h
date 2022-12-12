@@ -20,7 +20,7 @@ class Baralho {
     
     void tiraCarta(int pos);//funçao para remover carta do do baralho
     
-    void initBaralho(); //funçao que inicia o baralho com ttodas as suas cartas
+    void initBaralho(); //funçao que inicia o baralho com todas as suas cartas
 
 };
 
