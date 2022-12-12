@@ -73,7 +73,14 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
         std::cout << "Escolha o valor que deseja apostar: " << std::endl;
         std::cout << "Voce tem: " << usuario.getSaldo() << std::endl;
         std::cout << "Aposta minima: " << _apostaminima << std::endl;
+        try{
         std::cin >> aposta;
+        if(isalpha(aposta)){
+            throw std::invalid_argument("Apenas numeros");
+        }
+        }catch(std::invalid_argument &e){
+            std::cerr << e.what();
+        }
         if (aposta < 10 || aposta > usuario.getSaldo()) // se for menos que aposta minima ou maior que o saldo do usuario, tem de se apostar um valor valido
         {
             while (true)
@@ -100,7 +107,14 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
     }
     usuario.setSaldo((usuario.getSaldo() - aposta));
     std::cout << "Pressione [0] para rodar o Jackpot!!\n";
+    try{
     std::cin >> zero;
+    if(isalpha(zero)){
+        throw std::invalid_argument("Apenas 0");
+    }
+    }catch(std::invalid_argument &e){
+        std::cerr << e.what();
+    }
     if (zero != 0)
     {
         while (true)
@@ -214,6 +228,17 @@ void Jackpot::adicionarFundos(Usuario &usuario) // funcao adicionar fundos caso 
 {
     int adiciona;
     std::cout << "Indique o valor que deseja depositar:\n ";
-    std::cin >> adiciona;
-    usuario.setSaldo((usuario.getSaldo() + adiciona)); // soma os valores adicionados ao saldo do usuario
+     std::cin >> adiciona;
+    if((usuario.getSaldo()+adiciona)<10){
+        usuario.setSaldo((usuario.getSaldo() + adiciona));
+        while(true){
+            std::cout << "Seu saldo: " << usuario.getSaldo() << std::endl;
+            std::cout << "Saldo tem que ser no minimo" << _apostaminima << std::endl;
+            std::cin >> adiciona;
+            usuario.setSaldo((usuario.getSaldo() + adiciona));// soma os valores adicionados ao saldo do usuario
+            if((usuario.getSaldo()+adiciona)>10){
+                break;
+            }
+        }
+    }
 }
