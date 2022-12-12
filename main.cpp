@@ -16,19 +16,18 @@
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
 void criarConta(std::vector<Usuario> &listaUsuarios);
-bool entrar(std::vector<Usuario> &listaUsuarios);
+bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p);
 void exibirCassino();
 void exibirRoleta();
-bool verificaAposta(Usuario u, int valor);
-void depositar(Usuario &u);
+bool verificaAposta(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado, int &valor);
+void depositar(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado);
 
 
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  int indiceUsuarioLogado;
   Usuario adm("Admnistrador","adm@adm.com","adm123",200);
-  Usuario a("Antonio","antonio@gmail.com","102030",200);
-  listaUsuarios.push_back(a);
   listaUsuarios.push_back(adm);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
@@ -58,10 +57,9 @@ int main(void)
       }
       case 1:
       {
-        while (!entrar(listaUsuarios))
-        {
-          entrar(listaUsuarios);
-        }
+        bool p = true;
+        while (!entrar(listaUsuarios,indiceUsuarioLogado , p)){}
+        
         break;
       }
     }
@@ -91,7 +89,6 @@ int main(void)
       int valorApostado = 0;
       int codigoCor;
       std::string corApostada = "";
-      Usuario u("Arthur", "a@email.com", "12345", 100);
       exibirRoleta();
       std::cout << "Gostaria de apostar em numero ou cor?\n(0) - Numero\n(1) - Cor\n";
       switch(getOpcao(1)){
@@ -114,18 +111,18 @@ int main(void)
           break;
       }
       exibirRoleta();
-      std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+      std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
       std::cin >> valorApostado;
-      verificaAposta(u, valorApostado);
-      Roleta *roleta = new Roleta(u, corApostada, valorApostado, numeroApostado);
+      verificaAposta(listaUsuarios, indiceUsuarioLogado, valorApostado);
+      Roleta *roleta = new Roleta(listaUsuarios[indiceUsuarioLogado], corApostada, valorApostado, numeroApostado);
       roleta->sorteiaResultado();
       if (roleta->getFileira() == 0) {
         exibirRoleta();
         std::cout << "O dado caiu na cor " << roleta->getResultadoCor() << std::endl;
         if (corApostada == roleta->getResultadoCor()) {
           std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
-          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
-          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+          listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << listaUsuarios[indiceUsuarioLogado].getSaldo() << std::endl;
         }
         else {
           std::cout << "Voce perdeu\n";
@@ -136,45 +133,45 @@ int main(void)
         std::cout << "O dado caiu no numero " << roleta->getResultadoNumero() << std::endl;
         if(numeroApostado == roleta->getResultadoNumero()){
           std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
-          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
-          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+          listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << listaUsuarios[indiceUsuarioLogado].getSaldo() << std::endl;
         }
         else {
-          exibirRoleta();
+        
           std::cout << "Voce perdeu\n";
         }
       }
     }
     break;
     case 2:
-    Jackpot j(a,100);
-    j.rodarJack(a);
+    Jackpot j(listaUsuarios[indiceUsuarioLogado],100);
+    j.rodarJack(listaUsuarios[indiceUsuarioLogado]);
       break;
   }
 }
 
-void depositar(Usuario &u){
+void depositar(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado){
   int valor;
   std::cout << "Quanto quer depositar?\n";
   std::cin >> valor;
-  valor += u.getSaldo();
-  u.setSaldo(valor);
+  valor += listaUsuarios[indiceUsuarioLogado].getSaldo();
+  listaUsuarios[indiceUsuarioLogado].setSaldo(valor);
 }
 
-bool verificaAposta(Usuario u, int valor){
-  if(valor > u.getSaldo()){
+bool verificaAposta(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado, int &valor){
+  if(valor > listaUsuarios[indiceUsuarioLogado].getSaldo()){
     std::cout << "Voce nao tem esse saldo, gostaria de depositar mais ou digitar outro valor?\n(0) - Depositar mais\n(1) - Digitar outro valor\n";
         switch(getOpcao(1)){
           case 0:
-            depositar(u);
-            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            depositar(listaUsuarios, indiceUsuarioLogado);
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
             std::cin >> valor;
-            verificaAposta(u, valor);
+            verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
           break;
           case 1:
-            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
             std::cin >> valor;
-            verificaAposta(u, valor);
+            verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
           break;
         }
     return false;
@@ -182,9 +179,9 @@ bool verificaAposta(Usuario u, int valor){
   if(valor <= 0){
     std::cout << "Por favor digite um numero maior que 0:\n";
     std::cin >> valor;
-    verificaAposta(u, valor);
+    verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
   }
-  u.setSaldo((u.getSaldo() - valor));
+  listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() - valor));
   return true;
 }
 
@@ -315,13 +312,17 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   }
 }
 
-bool entrar(std::vector<Usuario> &listaUsuarios) {
+bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p) {
   bool logado = false;
   std::string email;
   std::string senha;
 
   std::cout << "Digite o seu email: ";
-  std::cin.ignore();
+  if (p == true) {
+    p = false;
+    std::cin.ignore();
+  }
+  
   std::getline(std::cin, email);
 
   std::cout << "Digite a sua senha: ";
@@ -333,10 +334,10 @@ bool entrar(std::vector<Usuario> &listaUsuarios) {
       logado = true;
       std::cout << "Login feito com sucesso!" << std::endl;
       sleep(2);
+      indiceUsuarioLogado = i;
       return logado;
     }
   }
-
   std::cout << "Usuario ou senha incorretos!" << std::endl;
   sleep(2);
   return logado;
