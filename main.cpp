@@ -15,7 +15,7 @@
 
 int getOpcao(int maximo);
 void adicionarFundos(std::string nome, std::string email, std::string senha);
-void criarConta(std::vector<Usuario> &listaUsuarios);
+void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado);
 bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p);
 void exibirCassino();
 void exibirRoleta();
@@ -45,7 +45,7 @@ int main(void)
       case 0:
       {
         try {
-          criarConta(listaUsuarios);
+          criarConta(listaUsuarios, indiceUsuarioLogado);
         }
         catch(const std::exception& e) {
           std::cerr << e.what() << '\n';
@@ -66,7 +66,7 @@ int main(void)
   }
   else {
     
-      criarConta(listaUsuarios);
+      criarConta(listaUsuarios, indiceUsuarioLogado);
     
     
     system("cls||clear");
@@ -223,7 +223,7 @@ void adicionarFundos(std::string nome, std::string email, std::string senha) {
   Usuario user(nome, email, senha, saldo);
 }
 
-void criarConta(std::vector<Usuario> &listaUsuarios) {
+void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
   bool arroba = false, ponto = false, maiorQue3Char = false;
 
   std::string nome;
@@ -319,6 +319,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
     sleep(3);
   }
+  indiceUsuarioLogado = (listaUsuarios.size()-1);
 }
 
 bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p) {
