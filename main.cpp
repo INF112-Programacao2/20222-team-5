@@ -14,7 +14,7 @@
 #include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
-void adicionarFundos(std::string nome, std::string email, std::string senha);
+Usuario adicionarFundos(std::string nome, std::string email, std::string senha);
 void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado);
 bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p);
 void exibirCassino();
@@ -214,13 +214,13 @@ int getOpcao(int maximo) { // funcao para ler opcao, validando o valor de entrad
   }
 }
 
-void adicionarFundos(std::string nome, std::string email, std::string senha) {
+Usuario adicionarFundos(std::string nome, std::string email, std::string senha) {
   int saldo;
   exibirCassino();
   std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
-
   Usuario user(nome, email, senha, saldo);
+  return user;
 }
 
 void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
@@ -311,7 +311,7 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
 
   if (getOpcao(1) == 0)
   {
-    adicionarFundos(nome, email, senha);
+    listaUsuarios.push_back(adicionarFundos(nome, email, senha));
   } else {
     Usuario user(nome, email, senha);
     listaUsuarios.push_back(user);
