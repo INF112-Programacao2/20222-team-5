@@ -87,10 +87,10 @@ int main(void)
     }
     case 1:
     {
-      int numeroApostado = -1;
+      int numeroApostado = -1; // valor "default", representa que nao teve numero apostado
       int valorApostado = 0;
       int codigoCor;
-      std::string corApostada = "";
+      std::string corApostada = ""; // valor "default", representa que nao teve cor apostada
       Usuario u("Arthur", "a@email.com", "12345", 100);
       exibirRoleta();
       std::cout << "Gostaria de apostar em numero ou cor?\n(0) - Numero\n(1) - Cor\n";
@@ -144,6 +144,7 @@ int main(void)
           std::cout << "Voce perdeu\n";
         }
       }
+      delete roleta;
     }
     break;
     case 2:
@@ -188,7 +189,7 @@ bool verificaAposta(Usuario u, int valor){
   return true;
 }
 
-int getOpcao(int maximo) {
+int getOpcao(int maximo) { // funcao para ler opcao, validando o valor de entrada
   int opcao;
   while (true) {
     std::cin >> opcao;
