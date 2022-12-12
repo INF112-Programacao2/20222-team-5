@@ -49,15 +49,19 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
     int pos[3];                       // 3 posicoes do jackpot
     std::cout << "Bem-vindo(a) ao Jackpot!! " << std::endl;
     std::cout << "Voce desejar:\n [0]- Sair\n [1]- Depositar para jogar\n";
-    try{
-    std::cin >> escolha;
-    if(isalpha(escolha)){
-        throw std::invalid_argument("Apenas 0 e 1, nao numeros");
+    try
+    {
+        std::cin >> escolha;
+        if (isalpha(escolha))
+        {
+            throw std::invalid_argument("Apenas 0 e 1, nao numeros");
+        }
     }
-    }catch(std::invalid_argument &e){
+    catch (std::invalid_argument &e)
+    {
         std::cerr << e.what();
     }
-    
+
     switch (escolha)
     {
     case 0:
@@ -68,45 +72,67 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
             int adc;
             std::cout << "Saldo menor que aposta minima :(\n";
             adicionarFundos(usuario); // Funcao craida para adicionar saldo na conta,herda usuario
+             std::cout << "Seu novo saldo: " << usuario.getSaldo() << std::endl; 
         }
-        std::cout << "Seu novo saldo: " << usuario.getSaldo() << std::endl;
-        std::cout << "Escolha o valor que deseja apostar: " << std::endl;
+        std::cout << "Escolha o valor que deseja apostar: " << std::endl;    
         std::cout << "Voce tem: " << usuario.getSaldo() << std::endl;
-        std::cout << "Aposta minima: " << _apostaminima << std::endl;
-        std::cin >> aposta;
+        std::cout << "Aposta minima: " << _apostaminima << std::endl;    //aposta minima setada para 10
+        try
+        {
+            std::cin >> aposta;   //insere valor da aposta
+            if (isalpha(aposta))
+            {
+                throw std::invalid_argument("Apenas numeros");
+            }
+        }
+        catch (std::invalid_argument &e)
+        {
+            std::cerr << e.what();
+        }
         if (aposta < 10 || aposta > usuario.getSaldo()) // se for menos que aposta minima ou maior que o saldo do usuario, tem de se apostar um valor valido
         {
             while (true)
             {
-                if (aposta < 10)
+                if (aposta < 10)           //quando menor que 10 ele pede para inserir novamente 
                 {
 
                     std::cerr << "Valor mais baixo que a aposta minima, por favor insira um valor valido: ";
                     std::cin >> aposta;
-                }
-                if (aposta > usuario.getSaldo())
+                } 
+                if (aposta > usuario.getSaldo())      //quando maior que o saldo do usuario, pede para inserir novamente
                 {
                     std::cerr << "Valor mais alto que seu saldo no cassino, por favor insira um valor valido: ";
                     std::cin >> aposta;
                 }
                 if (aposta >= 10 && aposta <= usuario.getSaldo())
                 {
-                    std::cout << "Pronto!! Aposta feita!!\n";
+                    std::cout << "Pronto!! Aposta feita!!\n";            //validou a aposta
                     break;
                 }
             }
         }
         break;
     }
-    usuario.setSaldo((usuario.getSaldo() - aposta));
-    std::cout << "Pressione [0] para rodar o Jackpot!!\n";
-    std::cin >> zero;
+    usuario.setSaldo((usuario.getSaldo() - aposta));            //diminui o valor da aposta do saldo do usuario
+    std::cout << "Pressione [0] para rodar o Jackpot!!\n";          //tratamento do girar o jackpot
+    try
+    {
+        std::cin >> zero;
+        if (isalpha(zero))
+        {
+            throw std::invalid_argument("Apenas 0");
+        }
+    }
+    catch (std::invalid_argument &e)
+    {
+        std::cerr << e.what();
+    }
     if (zero != 0)
     {
         while (true)
         {
             std::cerr << "Apenas o comando [0] inicia o jogo. Qualquer outro comando nao inicia o Jackpot\n Insira novamente:\n";
-            std::cin >> zero;
+            std::cin >> zero;                                   
             if (isdigit(zero) == 0)
             {
                 break;
@@ -123,7 +149,7 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
         switch (pos[i]) // Para cada posicao, uma figura associada, 5 posicoes para ter mais chance de ganhar
         {
         case 0:
-            std::cout << "Limao ";
+            std::cout << "Limao ";          //cada numero corresponde a uma figura
             break;
         case 1:
             std::cout << "Banana ";
@@ -135,17 +161,17 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
             std::cout << "Jackpot ";
             break;
         case 4:
-            std::cout << "7 ";
+            std::cout << "7 ";             //5 figuras para ficar mais entendivel e "demonstravel" o codigo
             break;
         }
-        sleep(1); // timer para nao dar cout nas 3 posicoes de vez
+        sleep(1); // timer para nao dar cout nas 3 posicoes de vez, efeito de jackpot
     }
     std::cout << std::endl;
     if (pos[0] == pos[1] && pos[1] == pos[2]) // se as 3 posicoes ao iguais, o usuario vence
     {
         std::cout << "Voce venceu!!!!" << std::endl;
         std::cout << "Aqui esta seu premio!!" << std::endl;
-        switch (pos[0]) // multiplicadores diferentes de acordo com a imagem obtida
+        switch (pos[0]) // multiplicadores diferentes de acordo com a imagem obtida, para cada figura, o premio se diferencia
         {
         case 0:
             premiacao = aposta * 5; // Premiacoes herda de Jogo
@@ -180,7 +206,7 @@ int Jackpot::rodarJack(Usuario &usuario) // funcao principal do Jackpot
             break;
         }
         std::cout << std::endl;
-        std::cout << "Parabens !!\n"; 
+        std::cout << "Parabens !!\n";
     }
     else
     {
@@ -213,7 +239,21 @@ int Jackpot::repetirJogada(Usuario &usuario) // repete a jogada
 void Jackpot::adicionarFundos(Usuario &usuario) // funcao adicionar fundos caso o saldo seja menor que a aposta minima
 {
     int adiciona;
-    std::cout << "Indique o valor que deseja depositar:\n ";
+    std::cout << "Indique o valor que deseja depositar:\n ";  
     std::cin >> adiciona;
-    usuario.setSaldo((usuario.getSaldo() + adiciona)); // soma os valores adicionados ao saldo do usuario
+    if ((usuario.getSaldo() + adiciona) < 10) //se for menor que 10, ele tem q adicionar mais para continuar jogando
+    {
+        usuario.setSaldo((usuario.getSaldo() + adiciona));     //adiciona o saldo ao usuario
+        while (true)
+        {
+            std::cout << "Seu saldo: " << usuario.getSaldo() << std::endl;            //cout no saldo atual
+            std::cout << "Saldo tem que ser no minimo " << _apostaminima << std::endl;
+            std::cin >> adiciona;                              //adiciona mais saldo
+            usuario.setSaldo((usuario.getSaldo() + adiciona)); // soma os valores adicionados ao saldo do usuario
+            if ((usuario.getSaldo() + adiciona) >= 10)           //se maior que 10,breaka
+            {
+                break;
+            }
+        }
+    }
 }

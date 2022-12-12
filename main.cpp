@@ -81,6 +81,19 @@ int main(void)
   {
     case 0:
     {
+      bool sair=false;
+      x:
+      Blackjack b;
+      while(!sair){
+        b.mainBlackjack(listaUsuarios[indiceUsuarioLogado]);
+        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n";
+        switch(getOpcao(1)){
+          case 0:
+          goto x;
+          case 1:
+          sair=true;
+        }
+      }
       break;
     }
     case 1:
