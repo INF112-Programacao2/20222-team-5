@@ -149,7 +149,7 @@ int main(void)
           std::cout << "Novo saldo de: " << listaUsuarios[indiceUsuarioLogado].getSaldo() << std::endl;
         }
         else {
-        
+          
           std::cout << "Voce perdeu\n";
         }
       }
@@ -223,7 +223,6 @@ Usuario adicionarFundos(std::string nome, std::string email, std::string senha) 
 }
 
 void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
-  bool arroba = false, ponto = false, maiorQue3Char = false;
 
   std::string nome;
   std::string email;
@@ -240,6 +239,9 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
       if (nome.length() > 20) { //se o nome tiver mais de 20 caracteres lanca a excecao
         throw limMaxDeCaracteres();
       }
+      else if(nome.length() <= 1) {
+        throw std::invalid_argument("O nome deve conter mais que 1 caracter!");
+      }
       else {
         break; //se passou no teste sai do while
       }
@@ -255,7 +257,8 @@ void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
 
   while (true) {
     try {
-  
+      
+      bool arroba = false, ponto = false, maiorQue3Char = false;
       std::getline(std::cin, email);
 
       for (int i = 0; i < email.length(); i++) { //verifica se no email existe "@" e "." e se tem mais de 3 caracteres 
