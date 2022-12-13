@@ -14,40 +14,38 @@
 #include "jackpot/jackpot.h"
 
 int getOpcao(int maximo);
-void adicionarFundos(std::string nome, std::string email, std::string senha);
-void criarConta(std::vector<Usuario> &listaUsuarios);
-bool entrar(std::vector<Usuario> &listaUsuarios);
+Usuario adicionarFundos(std::string nome, std::string email, std::string senha);
+void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado);
+bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p);
 void exibirCassino();
 void exibirRoleta();
-bool verificaAposta(Usuario u, int valor);
-void depositar(Usuario &u);
+bool verificaAposta(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado, int &valor);
+void depositar(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado);
 
 
 int main(void)
 {
   std::vector<Usuario> listaUsuarios;
+  int indiceUsuarioLogado;
   Usuario adm("Admnistrador","adm@adm.com","adm123",200);
-  Usuario a("Antonio","antonio@gmail.com","102030",200);
-  Usuario z("zops","zops@zops.com","123456",50000);
-  listaUsuarios.push_back(a);
   listaUsuarios.push_back(adm);
   exibirCassino();
   std::cout << "========================|   SEJA BEM VINDO AO CASSINO  |==============================" << std::endl;
   std::cout << "(0) - Criar conta" << std::endl;
-  if (listaUsuarios.size() > 0)
+  if (listaUsuarios.size() > 0) //se a lista de usuarios estiver vazia so aparecera a opcao de criar conta
   {
     std::cout << "(1) - Entrar" << std::endl;
   }
+      
   
-  
-  if (listaUsuarios.size() > 0)
+  if (listaUsuarios.size() > 0) //se a lista de usuarios nao estiver vazia sera possivel entrar e criar uma nova conta
   {
     switch (getOpcao(1))
     {
       case 0:
       {
         try {
-          criarConta(listaUsuarios);
+          criarConta(listaUsuarios, indiceUsuarioLogado);
         }
         catch(const std::exception& e) {
           std::cerr << e.what() << '\n';
@@ -59,18 +57,16 @@ int main(void)
       }
       case 1:
       {
-        while (!entrar(listaUsuarios))
-        {
-          entrar(listaUsuarios);
-        }
+        bool p = true;
+        while (!entrar(listaUsuarios,indiceUsuarioLogado , p)){}
+        
         break;
       }
     }
   }
-  else {
+  else { //caso a lista de usuarios esteja vazia ira direto para a funcao de criar conta
     
-      criarConta(listaUsuarios);
-    
+      criarConta(listaUsuarios, indiceUsuarioLogado);
     
     system("cls||clear");
   }
@@ -88,8 +84,8 @@ int main(void)
       x:
       Blackjack b;
       while(!sair){
-        b.mainBlackjack(z);
-        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n";
+        b.mainBlackjack(listaUsuarios[indiceUsuarioLogado]);
+        std::cout << "Deseja jogar novamente?\n(0)-Sim\n(1)-Nao\n"; // loop para o jogador decidir quando quer parar de jogar
         switch(getOpcao(1)){
           case 0:
           goto x;
@@ -101,11 +97,10 @@ int main(void)
     }
     case 1:
     {
-      int numeroApostado = -1;
+      int numeroApostado = -1; // valor "default", representa que nao teve numero apostado
       int valorApostado = 0;
       int codigoCor;
       std::string corApostada = "";
-      Usuario u("Arthur", "a@email.com", "12345", 100);
       exibirRoleta();
       std::cout << "Gostaria de apostar em numero ou cor?\n(0) - Numero\n(1) - Cor\n";
       switch(getOpcao(1)){
@@ -128,18 +123,18 @@ int main(void)
           break;
       }
       exibirRoleta();
-      std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+      std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
       std::cin >> valorApostado;
-      verificaAposta(u, valorApostado);
-      Roleta *roleta = new Roleta(u, corApostada, valorApostado, numeroApostado);
+      verificaAposta(listaUsuarios, indiceUsuarioLogado, valorApostado);
+      Roleta *roleta = new Roleta(listaUsuarios[indiceUsuarioLogado], corApostada, valorApostado, numeroApostado);
       roleta->sorteiaResultado();
       if (roleta->getFileira() == 0) {
         exibirRoleta();
         std::cout << "O dado caiu na cor " << roleta->getResultadoCor() << std::endl;
         if (corApostada == roleta->getResultadoCor()) {
           std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
-          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
-          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+          listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << listaUsuarios[indiceUsuarioLogado].getSaldo() << std::endl;
         }
         else {
           std::cout << "Voce perdeu\n";
@@ -150,45 +145,46 @@ int main(void)
         std::cout << "O dado caiu no numero " << roleta->getResultadoNumero() << std::endl;
         if(numeroApostado == roleta->getResultadoNumero()){
           std::cout << "Parabens voce ganhou!\nRetorno obtido: " << roleta->getPremiacao() << std::endl;
-          u.setSaldo((u.getSaldo() + roleta->getPremiacao()));
-          std::cout << "Novo saldo de: " << u.getSaldo() << std::endl;
+          listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() + roleta->getPremiacao()));
+          std::cout << "Novo saldo de: " << listaUsuarios[indiceUsuarioLogado].getSaldo() << std::endl;
         }
         else {
-          exibirRoleta();
+          
           std::cout << "Voce perdeu\n";
         }
       }
+      delete roleta;
     }
     break;
     case 2:
-    Jackpot j(a,100);
-    j.rodarJack(a);
+    Jackpot j(listaUsuarios[indiceUsuarioLogado],100);
+    j.rodarJack(listaUsuarios[indiceUsuarioLogado]);
       break;
   }
 }
 
-void depositar(Usuario &u){
+void depositar(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado){
   int valor;
   std::cout << "Quanto quer depositar?\n";
   std::cin >> valor;
-  valor += u.getSaldo();
-  u.setSaldo(valor);
+  valor += listaUsuarios[indiceUsuarioLogado].getSaldo();
+  listaUsuarios[indiceUsuarioLogado].setSaldo(valor);
 }
 
-bool verificaAposta(Usuario u, int valor){
-  if(valor > u.getSaldo()){
+bool verificaAposta(std::vector <Usuario> &listaUsuarios, int &indiceUsuarioLogado, int &valor){
+  if(valor > listaUsuarios[indiceUsuarioLogado].getSaldo()){
     std::cout << "Voce nao tem esse saldo, gostaria de depositar mais ou digitar outro valor?\n(0) - Depositar mais\n(1) - Digitar outro valor\n";
         switch(getOpcao(1)){
           case 0:
-            depositar(u);
-            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            depositar(listaUsuarios, indiceUsuarioLogado);
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
             std::cin >> valor;
-            verificaAposta(u, valor);
+            verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
           break;
           case 1:
-            std::cout << "Qual valor ira apostar? (Seu saldo e de " << u.getSaldo() << ")\n";
+            std::cout << "Qual valor ira apostar? (Seu saldo e de " << listaUsuarios[indiceUsuarioLogado].getSaldo() << ")\n";
             std::cin >> valor;
-            verificaAposta(u, valor);
+            verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
           break;
         }
     return false;
@@ -196,18 +192,13 @@ bool verificaAposta(Usuario u, int valor){
   if(valor <= 0){
     std::cout << "Por favor digite um numero maior que 0:\n";
     std::cin >> valor;
-    verificaAposta(u, valor);
+    verificaAposta(listaUsuarios, indiceUsuarioLogado, valor);
   }
-  u.setSaldo((u.getSaldo() - valor));
+  listaUsuarios[indiceUsuarioLogado].setSaldo((listaUsuarios[indiceUsuarioLogado].getSaldo() - valor));
   return true;
 }
 
-/*int getOpcao(int maximo)
-{
-  Roleta roleta();
-}*/
-
-int getOpcao(int maximo) {
+int getOpcao(int maximo) { // funcao para ler opcao, validando o valor de entrada
   int opcao;
   while (true) {
     std::cin >> opcao;
@@ -222,17 +213,16 @@ int getOpcao(int maximo) {
   }
 }
 
-void adicionarFundos(std::string nome, std::string email, std::string senha) {
+Usuario adicionarFundos(std::string nome, std::string email, std::string senha) {
   int saldo;
   exibirCassino();
   std::cout << "Quanto voce deseja adicionar a sua carteira? ";
   std::cin >> saldo;
-
-  Usuario user(nome, email, senha, saldo);
+  Usuario user(nome, email, senha, saldo); //segundo metodo construtor de usuario(polimorfismo)
+  return user;
 }
 
-void criarConta(std::vector<Usuario> &listaUsuarios) {
-  bool arroba = false, ponto = false, maiorQue3Char = false;
+void criarConta(std::vector<Usuario> &listaUsuarios, int &indiceUsuarioLogado) {
 
   std::string nome;
   std::string email;
@@ -246,14 +236,17 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
       std::cin.ignore();
       std::getline(std::cin, nome);
       
-      if (nome.length() > 20) {
+      if (nome.length() > 20) { //se o nome tiver mais de 20 caracteres lanca a excecao
         throw limMaxDeCaracteres();
       }
+      else if(nome.length() <= 1) {
+        throw std::invalid_argument("O nome deve conter mais que 1 caracter!");
+      }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
-    catch(const std::exception& e) {
+    catch(const std::exception& e) { //pega a excecao de mais de 20 caracteres no nome
       exibirCassino();
       std::cerr << e.what() << '\n';
     }
@@ -264,10 +257,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
 
   while (true) {
     try {
-  
+      
+      bool arroba = false, ponto = false, maiorQue3Char = false;
       std::getline(std::cin, email);
 
-      for (int i = 0; i < email.length(); i++) {
+      for (int i = 0; i < email.length(); i++) { //verifica se no email existe "@" e "." e se tem mais de 3 caracteres 
         if (email[i] == '@') {
           arroba = true;
         }
@@ -279,14 +273,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
         }
       }
       
-      if (email.length() > 40) {
-        throw limMaxDeCaracteres();
-      }
-      else if (arroba == false || ponto == false || maiorQue3Char == false) {
+      if (arroba == false || ponto == false || maiorQue3Char == false || email.length() > 40) { // verifica as validacoes anteriores e se o email tem mais de 40 caracteres, e lanca uma excecao
         throw emailInvalido();
       }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
     catch(const std::exception& e) {
@@ -302,11 +293,11 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
   
       std::getline(std::cin, senha);
       
-      if (senha.length() > 20 || senha.length() < 6) {
+      if (senha.length() > 20 || senha.length() < 6) { //verifica se a senha tem entre 6 e 20 caracteres, se nao, lanca uma excecao
         throw senhaInvalida();
       }
       else {
-        break;
+        break; //se passou no teste sai do while
       }
     }
     catch(const std::exception& e) {
@@ -319,39 +310,44 @@ void criarConta(std::vector<Usuario> &listaUsuarios) {
 
   if (getOpcao(1) == 0)
   {
-    adicionarFundos(nome, email, senha);
+    listaUsuarios.push_back(adicionarFundos(nome, email, senha)); //se o usuario selecionar a opcao 0 insere o usuario da funcao adicionar fundos na lista de usuarios
   } else {
-    Usuario user(nome, email, senha);
-    listaUsuarios.push_back(user);
+    Usuario user(nome, email, senha); //se o usuario optar por nao adcionar saldo a sua conta cria o usuario sem saldo
+    listaUsuarios.push_back(user); //insere o usuario sem saldo na lista de usuarios
     exibirCassino();
     std::cout << "Parabens!! Seu usuario foi criado com sucesso, agora e so comecar a jogar!!" << std::endl;
     sleep(3);
   }
+  indiceUsuarioLogado = (listaUsuarios.size()-1);
 }
 
-bool entrar(std::vector<Usuario> &listaUsuarios) {
+bool entrar(std::vector<Usuario> &listaUsuarios,int &indiceUsuarioLogado, bool &p) { 
   bool logado = false;
   std::string email;
   std::string senha;
 
   std::cout << "Digite o seu email: ";
-  std::cin.ignore();
+  if (p == true) { // se for a primeira vez que esta chamando a funcao deve dar um ignore para que seja possivel ler corretamente os dados
+    p = false;     // seta p como false para nao entrar mais nesse if
+    std::cin.ignore();
+  }
+  
   std::getline(std::cin, email);
 
   std::cout << "Digite a sua senha: ";
   std::getline(std::cin, senha);
   
-  for (int i = 0; i < listaUsuarios.size(); i++) {
+  for (int i = 0; i < listaUsuarios.size(); i++) { //verifica dentro da lista de usuarios se existe um email e senha compativeis
     if (listaUsuarios[i].getEmail() == email && listaUsuarios[i].getSenha() == senha)
     {
       logado = true;
       std::cout << "Login feito com sucesso!" << std::endl;
       sleep(2);
-      return logado;
+      indiceUsuarioLogado = i; //modifica o valor de indice usuario logado para passar para as funcoes de jogos
+      return logado; //retorna o usuario logado
     }
   }
-
-  std::cout << "Usuario ou senha incorretos!" << std::endl;
+  std::cout << "Usuario ou senha incorretos!" << std::endl; //se nao existir nenhum email e senha compativeis na lista de usuarios retorna um logado = false
   sleep(2);
   return logado;
 }

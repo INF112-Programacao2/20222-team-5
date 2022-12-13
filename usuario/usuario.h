@@ -13,7 +13,7 @@ private:
 
 public:
     Usuario(std::string nome, std::string email, std::string senha);
-    Usuario(std::string nome, std::string email, std::string senha, int saldo);
+    Usuario(std::string nome, std::string email, std::string senha, int saldo); //polimorfismo de usuario com saldo
     Usuario();
     ~Usuario();
 

@@ -22,6 +22,10 @@ Usuario::Usuario() {}
 
 Usuario::~Usuario() {}
 
+std::string Usuario::getNome(){
+    return nome;
+}
+
 int Usuario::getSaldo(){
     return saldo;
 }

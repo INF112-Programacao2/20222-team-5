@@ -1,5 +1,6 @@
 #include "blackjack.h"
 #include <cstdlib>
+#include <ctime>
 #include <exception>
 #include <unistd.h>
 
@@ -54,12 +55,18 @@ void Blackjack::mainBlackjack(Usuario &user){
     std::cout << "Qual sera o valor apostado?: " << std::endl;
     std::cin >> aposta;
 
+    if(aposta<=0){
+        std::cout << "O valor apostado deve ser maior que zero!" << std::endl;
+        goto w;
+    }
     if(user.getSaldo() < aposta){ //caso o usuario nao tenha o valor da aposta, pergunta novamente
         std::cout << "Saldo de fichas insuficiente!" << std::endl;
         goto w;
     }
 
-    user.setSaldo(user.getSaldo()-aposta); //seta o novo saldo da aposta
+    Jogo::setValorApostado(aposta);
+    Jogo::setPremiacao(2*aposta);
+    user.setSaldo(user.getSaldo()-Jogo::getValorApostado()); //seta o novo saldo da aposta
 
     std::cout << "\nO jogo comecou!\n";
     std::cout << "Lembre-se que o dealer para com 17!\n";
@@ -134,15 +141,15 @@ void Blackjack::mainBlackjack(Usuario &user){
     }
     if(venceu){ //se ele venceu:
         std::cout << "Voce venceu!" << std::endl;
-        user.setSaldo(user.getSaldo()+(2*aposta)); //da o valor apostado mais o ganho apra o jogador 
-        std::cout << "A premiacao foi de: " << (2*aposta) << std::endl;
+        user.setSaldo(user.getSaldo()+(Jogo::getPremiacao())); //da o valor apostado mais o ganho apra o jogador 
+        std::cout << "A premiacao foi de: " << (Jogo::getPremiacao()) << std::endl;
     }
     if(!venceu && !empate){//se perdeu:
         std::cout << "O dealer venceu!" <<std::endl;
     }
     if(empate){//se empatou:
         std::cout << "O seu dinheiro foi devolvido!" << std::endl;
-        user.setSaldo(user.getSaldo()+(aposta));//como empatou, devolve o dinheiro pro jogador
+        user.setSaldo(user.getSaldo()+(Jogo::getValorApostado()));//como empatou, devolve o dinheiro pro jogador
     }
 }
 
