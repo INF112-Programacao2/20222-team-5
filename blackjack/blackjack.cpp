@@ -55,6 +55,10 @@ void Blackjack::mainBlackjack(Usuario &user){
     std::cout << "Qual sera o valor apostado?: " << std::endl;
     std::cin >> aposta;
 
+    if(aposta<=0){
+        std::cout << "O valor apostado deve ser maior que zero!" << std::endl;
+        goto w;
+    }
     if(user.getSaldo() < aposta){ //caso o usuario nao tenha o valor da aposta, pergunta novamente
         std::cout << "Saldo de fichas insuficiente!" << std::endl;
         goto w;
